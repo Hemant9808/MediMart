@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "medimartui",
+			"path": "."
+		},
+		{
+			"name": "src",
+			"path": "../MediMart/client/src"
+		}
+	],
+	"settings": {}
+}

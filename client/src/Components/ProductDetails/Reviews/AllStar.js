@@ -1,4 +1,4 @@
-import ProgressBar from '@ramonak/react-progress-bar';
+// import ProgressBar from '@ramonak/react-progress-bar';
 import React from 'react';
 import ShowRating from '../../Common/ShowRating';
 
@@ -22,12 +22,12 @@ const AllStar = () => {
               5 star
             </span>
             <div className="w-full">
-              <ProgressBar
+              {/* <ProgressBar
                 completed={60}
                 margin={5}
                 bgColor="#00BFA5"
                 labelSize={12}
-              />
+              /> */}
             </div>
           </div>
           <div className="flex items-center space-x-1">
@@ -35,12 +35,12 @@ const AllStar = () => {
               4 star
             </span>
             <div className="w-full">
-              <ProgressBar
+              {/* <ProgressBar
                 completed={60}
                 margin={5}
                 bgColor="#00BFA5"
                 labelSize={12}
-              />
+              /> */}
             </div>
           </div>
           <div className="flex items-center space-x-1">
@@ -48,12 +48,12 @@ const AllStar = () => {
               3 star
             </span>
             <div className="w-full">
-              <ProgressBar
+              {/* <ProgressBar
                 completed={60}
                 margin={5}
                 bgColor="#00BFA5"
                 labelSize={12}
-              />
+              /> */}
             </div>
           </div>
           <div className="flex items-center space-x-1">
@@ -61,12 +61,12 @@ const AllStar = () => {
               2 star
             </span>
             <div className="w-full">
-              <ProgressBar
+              {/* <ProgressBar
                 completed={60}
                 margin={5}
                 bgColor="#00BFA5"
                 labelSize={12}
-              />
+              /> */}
             </div>
           </div>
           <div className="flex items-center space-x-1">
@@ -74,12 +74,12 @@ const AllStar = () => {
               1 star
             </span>
             <div className="w-full">
-              <ProgressBar
+              {/* <ProgressBar
                 completed={21}
                 margin={5}
                 bgColor="#00BFA5"
                 labelSize={12}
-              />
+              /> */}
             </div>
           </div>
         </div>

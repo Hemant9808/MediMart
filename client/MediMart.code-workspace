@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "MediMart",
+			"path": ".."
+		},
+		{
+			"name": "medimartui",
+			"path": "../../medimartui"
+		}
+	],
+	"settings": {}
+}
