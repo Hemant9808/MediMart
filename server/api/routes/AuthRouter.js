@@ -1,13 +1,9 @@
 const express = require('express');
-const { sineUp, login, makeAdmin } = require('../controllers/AuthController');
-const { admin } = require('../middleware/Admin');
-const { auth } = require('../middleware/Auth');
+const { login, signup } = require('../controllers/AuthController'); // Ensure these paths and names are correct
 
-const authRouter = express.Router();
+const router = express.Router();
 
-authRouter.post('/sineUp', sineUp);
+router.post('/signup', signup); // Ensure 'signup' is defined
+router.post('/login', login);   // Ensure 'login' is defined
 
-authRouter.post('/login', login);
-
-authRouter.post('/make-admin', auth, admin, makeAdmin);
-module.exports = authRouter;
+module.exports = router;

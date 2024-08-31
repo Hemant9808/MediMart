@@ -2,14 +2,26 @@ const authController = {};
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
-const { signUpValidation,loginValidation } = require("../validations/AuthValidation");
+const {
+  signUpValidation,
+  loginValidation,
+} = require("../validations/AuthValidation");
+const AppError = require("../utils/error");
 
-authController.sineUp = async (req, res) => {
-  console.log('----------------------request');
+const key = process.env.SECRET_KEY;
+const signToken = (id) => {
+  // if (!key) {
+  //   throw new AppError('SECRET_KEY is not defined in the environment variables.', 500);    }
+  const token = jwt.sign({ id }, process.env.SECRET_KEY, {
+    expiresIn: 2000,
+  });
+  return token;
+};
+
+signup = async (req, res, next) => {
+  console.log("----------------------request");
   try {
     const { fastName, lastName, userName, email, phone, password } = req.body;
-
-    signUpValidation(req, res);
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
@@ -21,6 +33,7 @@ authController.sineUp = async (req, res) => {
       email,
       phone,
       password: hashPassword,
+      passwordConfirm:hashPassword
     });
 
     const saveUser = await newUser.save();
@@ -29,76 +42,53 @@ authController.sineUp = async (req, res) => {
       saveUser
     );
 
-    const token = jwt.sign({ id: saveUser._id }, process.env.JWT_PASSWORD);
+    const token = signToken(saveUser.id);
     return res.send({
       token,
-      userInfo: {
-        _id: saveUser._id,
-        fastName: saveUser.fastName,
-        lastName: saveUser.lastName,
-        userName: saveUser.userName,
-        email: saveUser.email,
-        phone: saveUser.phone,
-      },
+      saveUser
     });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ message: error.message });
+    next(error);
   }
 };
-authController.login = async (req, res) => {
+
+login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      res.status(402).send({ message: "all fields are required" });
+    }
 
-    loginValidation(req, res);
-
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("username email password fastName lastName phone");
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "No account with this email has been registers" });
+      return next(new AppError("No account with this email has been registered", 404));
     }
+    console.log("bcrypt");
+
     const matchPassword = await bcrypt.compare(password, user.password);
+
     if (!matchPassword) {
-      return res.status(400).json({ message: "password incerate" });
+      return next(new AppError("Incorrect password", 401));
     }
-    // eslint-disable-next-line no-underscore-dangle
-    const token = jwt.sign({ id: user._id }, process.env.JWT_PASSWORD);
+
+    const token = signToken(user.id);
+
+    console.log(token);
+    user.password = undefined;
+
     return res.send({
       token,
-      userInfo: {
-        _id: user._id,
-        fastName: user.fastName,
-        lastName: user.lastName,
-        userName: user.userName,
-        email: user.email,
-        phone: user.phone,
-      },
+
+      user,
     });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ message: error.message });
+    res.send({ message: error });
   }
 };
 
-authController.makeAdmin = async (req, res) => {
-  try {
-    const { userId } = req;
 
-    const updated = await User.findByIdAndUpdate(
-      userId,
-      { isAdmin: true },
-      {
-        new: true,
-      }
-    );
 
-    return res.send(updated);
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ message: error.message });
-  }
-};
-
-module.exports = authController;
+module.exports = { signup, login };

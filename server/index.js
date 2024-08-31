@@ -16,7 +16,7 @@ app.use('/auth', authRouter);
 
 app.get('/', (req, res) => res.send('welcome our app'));
 
-const CONNECTION_URL = process.env.MONGODB_CONNECTION_URL_PAST;
+const CONNECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 4000;
 
 mongoose
