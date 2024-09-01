@@ -22,6 +22,9 @@ signup = async (req, res, next) => {
   console.log("----------------------request");
   try {
     const { fastName, lastName, userName, email, phone, password } = req.body;
+    if(!fastName || !lastName|| !userName ||  !email || !phone || !password){
+      res.status(402).json({message:"enter all the fields"});
+    }
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
@@ -33,14 +36,11 @@ signup = async (req, res, next) => {
       email,
       phone,
       password: hashPassword,
-      passwordConfirm:hashPassword
+     
     });
 
     const saveUser = await newUser.save();
-    console.log(
-      "🚀 ~ file: AuthController.js ~ line 43 ~ authController.sineUp= ~ saveUser",
-      saveUser
-    );
+    
 
     const token = signToken(saveUser.id);
     return res.send({

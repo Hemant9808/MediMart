@@ -77,17 +77,7 @@ const userSchema = new Schema(
       minlength: 6,
       select: false, // This ensures the password is not returned in queries by default
     },
-    passwordConfirm: {
-      type: String,
-      required: true,
-      validate: {
-        // Only runs on save() and create()
-        validator: function (value) {
-          return value === this.password;
-        },
-        message: 'Passwords do not match!',
-      },
-    },
+   
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -95,19 +85,6 @@ const userSchema = new Schema(
   { timestamps: true },
 );
 
-// Hash the password before saving the user
-// userSchema.pre('save', async function (next) {
-//   // Only run if password was actually modified
-//   if (!this.isModified('password')) return next();
-
-//   // Hash the password with cost of 12
-//   this.password = await bcrypt.hash(this.password, 12);
-
-//   // Delete passwordConfirm field
-//   this.passwordConfirm = undefined;
-
-//   next();
-// });
 
 // Update passwordChangedAt field when the password is changed
 userSchema.pre('save', function (next) {
@@ -117,10 +94,6 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-// Method to check if the entered password is correct
-userSchema.methods.isPasswordCorrect = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
 
 // Method to check if the password was changed after the JWT was issued
 userSchema.methods.isPasswordChanged = function (JWTCreatedTime) {
