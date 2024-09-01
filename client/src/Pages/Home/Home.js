@@ -8,6 +8,7 @@ import OfferCard from '../../Components/Home/OfferCard/OfferCard';
 import PictureUpload from '../../Components/Home/PictureUpload/PictureUpload';
 import ShopCard from '../../Components/Home/ShopCard/ShopCard';
 import VendorCTA from '../../Components/Home/VendorCTA/VendorCTA';
+import ServiceCards from '../../Components/ServiceCards/ServiceCards';
 
 const Home = () => {
   useEffect(() => {
@@ -27,6 +28,7 @@ const Home = () => {
         <NavBar />
         <Hero />
       </div>
+      <ServiceCards/>
       <OfferCard />
       <ShopCard />
       <PictureUpload />
