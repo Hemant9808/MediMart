@@ -7,7 +7,7 @@ const Hero = () => {
         <div className="mx-auto max-w-7xl">
           <div className="container py-24 mx-auto text-center sm:px-4 font-sans">
             <h1 className="text-4xl font-semibold font-display leading-10 tracking-tight text-gray-800 sm:text-5xl sm:leading-none">
-              <span className="relative inline-block text-transparent text-gray-800 tracking-normal">
+              <span className="relative inline-block text-gray-800 tracking-normal">
                 Your medication, delivered
               </span>
             </h1>
