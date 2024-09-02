@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginAccount } from '../../../Redux/user/actions';
+// import { loginAccount } from '../../../Redux/user/actions';
+import {loginAccount} from '../../../Redux/authSlice/authSlice'
 import FormValidation from '../../../Validation/FormValidation';
 import Registration from '../Registration/Registration';
 import './Login.css';
@@ -38,7 +39,17 @@ const LoginForm = () => {
   const login = (e) => {
     e.preventDefault();
     // recheckUserInput();
-    dispatch(loginAccount(formData));
+    dispatch(loginAccount(formData))
+    .then((res) => {
+      console.log("res login:", res);
+    })
+    .catch((error) => {
+        console.error("Failed to login:", error);
+    });
+
+
+
+
     const { email, password } =
       formData;
     // if (
