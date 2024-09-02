@@ -27,7 +27,8 @@ const ActionIcons = () => {
           </svg>
         </li>
       </Link>
-      <Link to="/login">
+      {/* <Link to="/login"> */}
+      <Link to="/">
         <li>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +48,7 @@ const ActionIcons = () => {
       </Link>
       <li>
         <button
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen(false)}
           className="py-4 relative border-2 border-transparent text-gray-700 rounded-full hover:text-teal-accent-700 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out"
           aria-label="Favorite"
         >
@@ -74,7 +75,7 @@ const ActionIcons = () => {
       </li>
       <li>
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen(false)}
           className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-teal-accent-700 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"
           aria-label="Cart"
         >
