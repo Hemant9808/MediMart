@@ -20,8 +20,12 @@ const signToken = (id) => {
 
 signup = async (req, res, next) => {
   console.log("----------------------request");
+  console.log(req.body.email);
+  
   try {
     const { firstName, lastName, userName, email, phone, password } = req.body;
+    console.log("firstName",firstName);
+    
     if(!firstName || !lastName|| !userName ||  !email || !phone || !password){
       res.status(402).json({message:"enter all the fields"});
     }
