@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const LOGIN_API = 'https://medimart-nayg.onrender.com/login'
-const REGISTER_API = 'https://medimart-nayg.onrender.com/signup'
+const LOGIN_API = 'https://medimart-nayg.onrender.com/auth/login'
+const REGISTER_API = 'https://medimart-nayg.onrender.com/auth/signup'
 // const LOGOUT_API = 'logout'
 
 export const loginAccount = createAsyncThunk(
@@ -39,7 +39,7 @@ export const createAccount = createAsyncThunk(
             formData.append("phone", credentials.phone);
             formData.append("email", credentials.email);
             formData.append("password", credentials.password);
-            formData.append("cmPassword", credentials.cmPassword);
+            
 
             const response = await axios.post(REGISTER_API,formData);
             // console.log('response- login !=',response);
