@@ -31,17 +31,20 @@ export const createAccount = createAsyncThunk(
     async (credentials) => {
         // console.log('createAccount credentials:-', credentials);
         try {
-            const formData = new FormData();
+            // const formData = new FormData();
 
-            formData.append("firstName", credentials.firstName);
-            formData.append("lastName", credentials.lastName);
-            formData.append("userName", credentials.userName);
-            formData.append("phone", credentials.phone);
-            formData.append("email", credentials.email);
-            formData.append("password", credentials.password);
-            
+           
+          const data =  {
+              "firstName": credentials.firstName,
+              "lastName": credentials.lastName,
+              "userName": credentials.userName,
+              "email": credentials.email,
+              "phone": credentials.phone,
+              "password": credentials.password,
+             
+            }
 
-            const response = await axios.post(REGISTER_API,formData);
+            const response = await axios.post(REGISTER_API,data);
             // console.log('response- login !=',response);
             
             return response;
