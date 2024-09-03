@@ -7,7 +7,7 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    fastName: {
+    firstName: {
       type: String,
       required: true,
     },

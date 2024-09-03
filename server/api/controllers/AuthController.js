@@ -21,8 +21,8 @@ const signToken = (id) => {
 signup = async (req, res, next) => {
   console.log("----------------------request");
   try {
-    const { fastName, lastName, userName, email, phone, password } = req.body;
-    if(!fastName || !lastName|| !userName ||  !email || !phone || !password){
+    const { firstName, lastName, userName, email, phone, password } = req.body;
+    if(!firstName || !lastName|| !userName ||  !email || !phone || !password){
       res.status(402).json({message:"enter all the fields"});
     }
 
@@ -30,7 +30,7 @@ signup = async (req, res, next) => {
     const hashPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      fastName,
+      firstName,
       lastName,
       userName,
       email,
@@ -65,7 +65,7 @@ login = async (req, res) => {
     if (!user) {
       return next(new AppError("No account with this email has been registered", 404));
     }
-    console.log("bcrypt");
+    
 
     const matchPassword = await bcrypt.compare(password, user.password);
 
