@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createAccount } from "../../../Redux/user/actions";
+// import { createAccount } from "../../../Redux/user/actions";
+import { createAccount} from '../../../Redux/authSlice/authSlice'
 import FormValidation from "../../../Validation/FormValidation";
 
 const Registration = ({ setIsAccount }) => {
@@ -36,10 +37,10 @@ const Registration = ({ setIsAccount }) => {
     e.preventDefault();
     // recheckUserInput();
     dispatch(createAccount(formData));
-    const { fastName, lastName, userName, phone, email, password, cmPassword } =
+    const { firstName, lastName, userName, phone, email, password, cmPassword } =
       formData;
     // if (
-    //   !fastName ||
+    //   !firstName ||
     //   !lastName ||
     //   !userName ||
     //   !phone ||
@@ -51,7 +52,7 @@ const Registration = ({ setIsAccount }) => {
     // }
 
     // if (
-    //   !errorData.fastName &&
+    //   !errorData.firstName &&
     //   !errorData.lastName &&
     //   !errorData.userName &&
     //   !errorData.phone &&
@@ -97,7 +98,7 @@ const Registration = ({ setIsAccount }) => {
                 </label>
                 <input
                   onBlur={(e) => handelBlur(e)}
-                  name="fastName"
+                  name="firstName"
                   className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 border-b-2 border-gray-500 rounded appearance-none hover:border-red-500 hover:shadow-xl focus:outline-none focus:bg-white"
                   id="grid-first-name"
                   type="text"
