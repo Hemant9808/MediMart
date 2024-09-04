@@ -1,7 +1,8 @@
-const vendorData = [
+const categoryData = [
   {
     _id: 'e628d8fc-130e-46da-9d2d-089406837a7c',
-    shopName: 'Huel LLC',
+    categoryName: 'Apollo Product',
+    img: "https://images.apollo247.in/pub/media/catalog/category/apollo_products_1.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: 'https://i.ibb.co/m079wqz/logo-1.jpg',
     banner: 'http://dummyimage.com/100x100.png/dddddd/000000',
     cardBanner: require('../Assets/images/vendorCardBanner/Image-1.jpg')
@@ -21,7 +22,8 @@ const vendorData = [
   },
   {
     _id: '8fb99109-ca7c-4a45-b6b1-5c0ea3279da6',
-    shopName: 'Tremblay and Schiller',
+    categoryName: 'Baby Care',
+    img: "https://images.apollo247.in/pub/media/catalog/category/baby_care_1.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: 'https://i.ibb.co/hLx4PDp/logo-2.jpg',
     banner: 'http://dummyimage.com/100x100.png/ff4444/ffffff',
     cardBanner: require('../Assets/images/vendorCardBanner/Image-2.jpg')
@@ -41,7 +43,8 @@ const vendorData = [
   },
   {
     _id: '4587978a-1734-4ad9-a2ab-484ea832822e',
-    shopName: 'Fahey-Batz',
+    categoryName: 'Monsoon Essentials',
+    img: "https://images.apollo247.in/pub/media/catalog/category/monsoon_essential_icon_new.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: 'https://i.ibb.co/gTyP52V/logo-3.jpg',
     banner: 'http://dummyimage.com/100x100.png/dddddd/000000',
     cardBanner: require('../Assets/images/vendorCardBanner/Image-3.jpg')
@@ -61,7 +64,8 @@ const vendorData = [
   },
   {
     _id: 'f40ef809-55c0-4632-b7ea-abb7e195782b',
-    shopName: 'Baumbach LLC',
+    categoryName: 'Personal Care',
+    img: "https://images.apollo247.in/pub/media/catalog/category/personalcare_2.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: 'https://i.ibb.co/7W4Bcpg/logo-4.jpg',
     banner: 'http://dummyimage.com/100x100.png/ff4444/ffffff',
     cardBanner: require('../Assets/images/vendorCardBanner/Image-4.jpg')
@@ -81,7 +85,8 @@ const vendorData = [
   },
   {
     _id: '57c7515d-e17d-4f6f-97cf-d1f35a336bed',
-    shopName: 'Howell Group',
+    categoryName: 'Nutrition & Suppliments',
+    img: "https://images.apollo247.in/pub/media/catalog/category/nutritional_supp.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: 'https://i.ibb.co/xCKt8dq/logo-5.jpg',
     banner: 'http://dummyimage.com/100x100.png/5fa2dd/ffffff',
     cardBanner: require('../Assets/images/vendorCardBanner/Image-5.jpg')
@@ -101,7 +106,8 @@ const vendorData = [
   },
   {
     _id: '5299f915-d6df-4970-a7b7-6b743f68cdf7',
-    shopName: 'Williamson-Gerlach',
+    categoryName: 'Skin Care',
+    img: "https://images.apollo247.in/pub/media/catalog/category/skin_care.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: 'https://i.ibb.co/bmfZp95/logo-6.jpg',
     banner: 'http://dummyimage.com/100x100.png/dddddd/000000',
     cardBanner: require('../Assets/images/vendorCardBanner/Image-6.jpg')
@@ -121,7 +127,8 @@ const vendorData = [
   },
   {
     _id: "e628d8fc-130e-46da-9d2d-086543837a7c",
-    shopName: "Maul LLC",
+    categoryName: "Women Care",
+    img: "https://images.apollo247.in/pub/media/catalog/category/women_care_new_i.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: "https://i.ibb.co/m079wqz/logo-1.jpg",
     banner: "http://dummyimage.com/100x100.png/dddddd/000000",
     cardBanner: require("../Assets/images/vendorCardBanner/Image-1.jpg").default,
@@ -139,7 +146,8 @@ const vendorData = [
   },
   {
     _id: "8fb99109-ca7c-4a45-b6b1-5c0ea8765da6",
-    shopName: "Tremblay ",
+    categoryName: "Protein Supplements",
+    img: "https://images.apollo247.in/pub/media/catalog/category/protein_supplements_1.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: "https://i.ibb.co/hLx4PDp/logo-2.jpg",
     banner: "http://dummyimage.com/100x100.png/ff4444/ffffff",
     cardBanner: require("../Assets/images/vendorCardBanner/Image-2.jpg").default,
@@ -157,7 +165,65 @@ const vendorData = [
   },
   {
     _id: "4587978a-1734-4ad9-a2ab-484ea833254e",
-    shopName: "Lahey Yatz",
+    categoryName: "MultiVitamins",
+    img: "https://images.apollo247.in/pub/media/catalog/category/multi_vitamins.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
+    logo: "https://i.ibb.co/gTyP52V/logo-3.jpg",
+    banner: "http://dummyimage.com/100x100.png/dddddd/000000",
+    cardBanner: require("../Assets/images/vendorCardBanner/Image-3.jpg").default,
+    rating: 1,
+    city: "Champerico",
+    location: "Kretoria",
+    longitude: -91.912218,
+    "postal code": "11007",
+    name: "Brandais Faull",
+    phone: "506-84-9725",
+    email: "bfaull2@multiply.com",
+    hasOwnDelivery: true,
+    isDeliveryFree: true,
+    status: "Closed"
+  },
+  {
+    _id: "4587978a-1734-4ad9-a2ab-484ea833254e",
+    categoryName: "Glucometer & Test Strips",
+    img: "https://images.apollo247.in/pub/media/catalog/category/glucometer_strips_1.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
+    logo: "https://i.ibb.co/gTyP52V/logo-3.jpg",
+    banner: "http://dummyimage.com/100x100.png/dddddd/000000",
+    cardBanner: require("../Assets/images/vendorCardBanner/Image-3.jpg").default,
+    rating: 1,
+    city: "Champerico",
+    location: "Kretoria",
+    longitude: -91.912218,
+    "postal code": "11007",
+    name: "Brandais Faull",
+    phone: "506-84-9725",
+    email: "bfaull2@multiply.com",
+    hasOwnDelivery: true,
+    isDeliveryFree: true,
+    status: "Closed"
+  },
+  {
+    _id: "4587978a-1734-4ad9-a2ab-484ea833254e",
+    categoryName: "Health Devices",
+    img: "https://images.apollo247.in/pub/media/catalog/category/healthdevices_2.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
+    logo: "https://i.ibb.co/gTyP52V/logo-3.jpg",
+    banner: "http://dummyimage.com/100x100.png/dddddd/000000",
+    cardBanner: require("../Assets/images/vendorCardBanner/Image-3.jpg").default,
+    rating: 1,
+    city: "Champerico",
+    location: "Kretoria",
+    longitude: -91.912218,
+    "postal code": "11007",
+    name: "Brandais Faull",
+    phone: "506-84-9725",
+    email: "bfaull2@multiply.com",
+    hasOwnDelivery: true,
+    isDeliveryFree: true,
+    status: "Closed"
+  },
+  {
+    _id: "4587978a-1734-4ad9-a2ab-484ea833254e",
+    categoryName: "Ayurveda",
+    img: "https://images.apollo247.in/pub/media/catalog/category/ayurveda_icon.jpg?tr=w-367.5,q-100,f-webp,c-at_max",
     logo: "https://i.ibb.co/gTyP52V/logo-3.jpg",
     banner: "http://dummyimage.com/100x100.png/dddddd/000000",
     cardBanner: require("../Assets/images/vendorCardBanner/Image-3.jpg").default,
@@ -175,4 +241,4 @@ const vendorData = [
   },
 ];
 
-export default vendorData;
+export default categoryData;

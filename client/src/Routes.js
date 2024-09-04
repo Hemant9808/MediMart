@@ -61,8 +61,8 @@ import CheckoutPage from './Pages/Checkout/CheckoutPage';
 import Home from './Pages/Home/Home';
 import OrderHistory from './Pages/OrderHistory/OrderHistory';
 import ProductDetails from './Pages/ProductDetails/ProductDetails';
-import AllShop from './Pages/Shop/AllShop';
-import ShopDetailsPage from './Pages/Shop/ShopDetailsPage';
+import AllShop from './Pages/Category/AllShop';
+import CategoryDetailsPage from './Pages/Category/CategoryDetailsPage';
 
 const Navigation = () => {
   return (
@@ -71,7 +71,8 @@ const Navigation = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/shopDetails/:vendorId" element={<ShopDetailsPage />} />
+        {/* <Route path="/shopDetails/:vendorId" element={<ShopDetailsPage />} /> */}
+        <Route path="/categoryDetails/:vendorId" element={<CategoryDetailsPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/productDetails" element={<ProductDetails />} />
         <Route path="/vendor/:panel" element={<VenderDashboardPage />} />

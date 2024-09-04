@@ -51,7 +51,7 @@ const ServiceCard = ({ service }) => {
               className="cardAnchorStyle yv"
             >
               <div>
-          <h3 className="text-lg font-semibold">{service.title}</h3>
+          <h3 className="text-lg font-semibold leading-6">{service.title}</h3>
           <p className={`text-xs ${service.subtitleColor} `}>{service.subtitle}</p>
         </div>
             </NavLink>

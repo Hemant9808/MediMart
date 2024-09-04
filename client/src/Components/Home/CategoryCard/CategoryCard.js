@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import categoryCard from "../../../Data/category";
 
 const CategoryItems = [
   {
@@ -63,28 +65,32 @@ const CategoryItems = [
   },
 ];
 
-const Category = () => {
+const CategoryCard = () => {
   return (
-    <div className="px-4 md:px-24 lg:px-8 mx-auto py-16 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
-      <h1 className="text-3xl sm:text-4xl font-semibold font-display text-gray-800 pb-10 text-center sm:text-left">
-        Shop by Category
-      </h1>
-      <div className="gap-4 md:gap-12 flex flex-row flex-wrap justify-between">
-        {CategoryItems.map((item) => (
-          <div className="flex flex-col items-center cursor-pointer">
-            {/* Category Image */}
-            <div className="rounded-2xl bg-[#E9FAEE]">
-              <img src={item.img} alt="icon-1" className="w-40 h-40" />
-            </div>
-            {/* Category Name */}
-            <div className="my-5">
-              <h2 className="w-full items-center">{item.name}</h2>
-            </div>
+    <>
+      <Link to={`/categoryDetails/${categoryCard._id}`}>
+        <div className="px-4 md:px-24 lg:px-8 mx-auto py-16 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
+          <h1 className="text-3xl sm:text-4xl font-semibold font-display text-gray-800 pb-10 text-center sm:text-left">
+            Shop by Category
+          </h1>
+          <div className="gap-4 md:gap-12 flex flex-row flex-wrap justify-between">
+            {categoryCard.map((item) => (
+              <div className="flex flex-col items-center cursor-pointer">
+                {/* Category Image */}
+                <div className="bg-[#E9FAEE] hover:shadow-lg transition duration-300 ease-in-out">
+                  <img src={item.img} alt="icon-1" className="w-40 h-40 " />
+                </div>
+                {/* Category Name */}
+                <div className="my-5">
+                  <h2 className="w-full items-center">{item.categoryName}</h2>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      </Link>
+    </>
   );
 };
 
-export default Category;
+export default CategoryCard;
