@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import vendorData from '../../Data/vendor';
+import CategoryData from '../../Data/category';
 
 const Categories = () => {
-  const [categories, setCategories] = useState(vendorData);
+  const [categories, setCategories] = useState(CategoryData);
 
   // console.log(categories[0].category)
   return (
@@ -17,7 +17,7 @@ const Categories = () => {
               <li className="bg-teal-50 hover:bg-teal-100 shadow-4xl my-4 p-2 cursor-pointer">
                 <div className="flex justify-between items-center">
                   <p className="text-gray-800 whitespace-no-wrap tracking-wide">
-                    {singleCategory?.shopName}
+                    {singleCategory?.categoryName}
                   </p>
                   <svg
                     className="w-5 h-5 text-gray-600"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import vendorData from '../../../Data/vendor';
+import vendorData from '../../../Data/category';
 
 const ShopBanner = () => {
   const { vendorId } = useParams();

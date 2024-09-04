@@ -1,5 +1,5 @@
 import React from 'react';
-import vendorData from '../../Data/vendor';
+import vendorData from '../../Data/category';
 import ShowRating from '../Common/ShowRating';
 
 const VendorInfo = () => {

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import Footer from '../../Components/Home/Footer/Footer';
 import Header from '../../Components/Home/NavBar/Header';
 import NavBar from '../../Components/Home/NavBar/NavBar';
-import ShopDetails from '../../Components/Shop/ShopDetails/ShopDetails';
+import CategoryDetails from '../../Components/Category/CategoryDetails/CategoryDetails';
 
-const ShopDetailsPage = () => {
+const CategoryDetailsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -13,10 +13,10 @@ const ShopDetailsPage = () => {
     <>
       <Header />
       <NavBar />
-      <ShopDetails />
+      <CategoryDetails />
       <Footer />
     </>
   );
 };
 
-export default ShopDetailsPage;
+export default CategoryDetailsPage;

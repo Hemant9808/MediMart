@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import allShops from '../../../Data/vendor';
+import allShops from '../../../Data/category';
 
 const DisplayShops = () => {
     const [shopCards, setShopCards] = useState(allShops);

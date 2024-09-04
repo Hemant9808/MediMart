@@ -6,12 +6,15 @@ import Header from '../../Components/Home/NavBar/Header';
 import NavBar from '../../Components/Home/NavBar/NavBar';
 // import OfferCard from '../../Components/Home/OfferCard/OfferCard';
 import PictureUpload from '../../Components/Home/PictureUpload/PictureUpload';
-// import ShopCard from '../../Components/Home/ShopCard/ShopCard';
+import ShopCard from '../../Components/Home/ShopCard/ShopCard';
 import VendorCTA from '../../Components/Home/VendorCTA/VendorCTA';
 import ServiceCards from '../../Components/ServiceCards/ServiceCards';
-import Category from '../../Components/Home/Category/Category';
+import CategoryCard from '../../Components/Home/CategoryCard/CategoryCard';
+
 
 const Home = () => {
+
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -30,7 +33,7 @@ const Home = () => {
         <Hero />
       </div>
       <ServiceCards/>
-      <Category />
+      <CategoryCard />
       {/* <OfferCard /> */}
       {/* <ShopCard /> */}
       <PictureUpload />

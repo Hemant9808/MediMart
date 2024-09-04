@@ -5,7 +5,7 @@ const ContactVendor = () => {
     <div>
       <div className="bg-white rounded m-2 shadow-3xl z-20 pt-5 pb-6 px-2 mt-10 border-t-2 border-teal-400">
         <div>
-          <h1 className="text-xl text-gray-800">Contact with Vendor</h1>
+          <h1 className="text-xl text-gray-800">Contact Owner</h1>
           <h3 className="text-base text-gray-700">Send request for medicine</h3>
         </div>
         <div className="pt-3">

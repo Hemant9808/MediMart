@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import shopCard from '../../../Data/vendor';
+import shopCard from '../../../Data/category';
 
 const ShopCard = () => {
   const first6 = shopCard.slice(0, 6);
