@@ -65,7 +65,7 @@ export const createAccount = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    userDetails: "",
+    userDetails: localStorage.getItem("saveUser") || "",
     loading: false,
     error: null,
   },
@@ -79,7 +79,9 @@ const authSlice = createSlice({
       .addCase(loginAccount.fulfilled, (state, action) => {
         console.log("loginAccount.fulfilled", action);
         state.loading = false;
-        state.userDetails = action.payload;
+        localStorage.setItem("token" , action.payload.token);
+        localStorage.setItem("saveUser", action.payload.saveUser);
+        state.userDetails = action.payload.saveUser;
       })
       .addCase(loginAccount.rejected, (state, action) => {
         console.log("loginAccount.rejected", action);
@@ -95,7 +97,8 @@ const authSlice = createSlice({
         console.log("createAccount.fulfilled", action);
         state.loading = false;
         localStorage.setItem("token", action.payload.token);
-        state.userDetails = action.payload;
+        localStorage.setItem("userDetails", action.payload.saveUser);
+        state.userDetails = action.payload.saveUser;
       })
       .addCase(createAccount.rejected, (state, action) => {
         console.log("createAccount.rejected", action);
