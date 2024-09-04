@@ -57,11 +57,13 @@ signup = async (req, res, next) => {
   }
 };
 
-login = async (req, res) => {
+login = async (req, res,next) => {
   try {
     const { email, password } = req.body;
+    console.log( email, password);
+
     if (!email || !password) {
-      res.status(402).send({ message: "all fields are required" });
+      res.status(402).send({ message: "all fields are required"});
     }
 
     const user = await User.findOne({ email }).select("username email password fastName lastName phone");
@@ -84,7 +86,6 @@ login = async (req, res) => {
 
     return res.send({
       token,
-
       user,
     });
   } catch (error) {

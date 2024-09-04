@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const LOGIN_API = "https://medimart-nayg.onrender.com/login";
-const REGISTER_API = "http://localhost:4000/auth/signup";
+//const REGISTER_API = "http://localhost:4000/auth/signup";
 
-//const REGISTER_API = 'https://medimart-nayg.onrender.com/auth/signup'
+const REGISTER_API = 'https://medimart-nayg.onrender.com/auth/signup'
 // const LOGOUT_API = 'logout'
 
 export const loginAccount = createAsyncThunk(
@@ -49,11 +49,17 @@ export const createAccount = createAsyncThunk(
       for (const [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
       }
-      const response = await axios.post(REGISTER_API, formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+
+      const response = await axios.post(REGISTER_API, formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      //const response = await axios.post(REGISTER_API, formData);
+      console.log('done');
+      
       // console.log('response- login !=',response);
 
       return response;
