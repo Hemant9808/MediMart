@@ -72,7 +72,7 @@ const Navigation = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         {/* <Route path="/shopDetails/:vendorId" element={<ShopDetailsPage />} /> */}
-        <Route path="/categoryDetails/:vendorId" element={<CategoryDetailsPage />} />
+        <Route path="/categoryDetails" element={<CategoryDetailsPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/productDetails" element={<ProductDetails />} />
         <Route path="/vendor/:panel" element={<VenderDashboardPage />} />

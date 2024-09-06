@@ -68,7 +68,8 @@ const CategoryItems = [
 const CategoryCard = () => {
   return (
     <>
-      <Link to={`/categoryDetails/${categoryCard._id}`}>
+      {/* <Link to={`/categoryDetails/${categoryCard._id}`}> */}
+      <Link to={`/categoryDetails?category=OTC`}>
         <div className="px-4 md:px-24 lg:px-8 mx-auto py-16 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
           <h1 className="text-3xl sm:text-4xl font-semibold font-display text-gray-800 pb-10 text-center sm:text-left">
             Shop by Category
