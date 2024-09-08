@@ -9,7 +9,9 @@ import NavBar from "../../Components/Home/NavBar/NavBar";
 import CategoryDetails from "../../Components/Category/CategoryDetails/CategoryDetails";
 
 const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
+  const a = new URLSearchParams(useLocation().search);
+     console.log(a , "kakakkakaka")
+   return a
 };
 
 const CategoryDetailsPage = () => {

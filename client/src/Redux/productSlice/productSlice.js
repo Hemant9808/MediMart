@@ -30,9 +30,9 @@ export const categoryProducts = createAsyncThunk(
   async (credentials) => {
     console.log('categoryProducts credentials:-', credentials);
     try {
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.append("categories", credentials);
+        // formData.append("categories", credentials);
 
         // /api/products?category=${categoryName}`
 
