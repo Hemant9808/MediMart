@@ -36,7 +36,11 @@ const userSchema = new Schema(
       minlength: 6,
       select: false, // This ensures the password is not returned in queries by default
     },
-   
+    role: {
+      type: String,
+      enum: ['user', 'admin'], //  Role options
+      default: 'user', 
+    },
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,

@@ -4,6 +4,10 @@ const checkFields = require("../utils/validator");
 addProducts = async (req, res) => {
     // console.log(req.body);
   try {
+    if(req.user.role!=='admin'){
+        return res.status(501).json({message:"only admin is authorize to add products"})
+    }
+
     const {
         name,
         description,
@@ -79,6 +83,9 @@ getProductById = async (req, res) => {
 
 deleteProduct = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            return res.status(501).json({message:"only admin is authorize to delete products"})
+        }
         const product = await Product.findByIdAndDelete(req.params.id);
 
         if (!product) {
