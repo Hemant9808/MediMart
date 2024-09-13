@@ -6,14 +6,16 @@ const {
   signUpValidation,
   loginValidation,
 } = require("../validations/AuthValidation");
+const nodemailer = require("nodemailer");
 const AppError = require("../utils/error");
+const { payment, welcome } = require("../utils/constant");
 
 const key = process.env.SECRET_KEY;
 const signToken = (id) => {
   // if (!key) {
   //   throw new AppError('SECRET_KEY is not defined in the environment variables.', 500);    }
   const token = jwt.sign({ id }, process.env.SECRET_KEY, {
-    expiresIn: 2000,
+   // expiresIn: 2000,
   });
   return token;
 };
@@ -94,6 +96,65 @@ login = async (req, res,next) => {
   }
 };
 
+  forgotPassword = async (req, res) => {
+  try {
+    //console.log( "useridfromfrogotpasswrd" ,req.body.user?._id);
 
+    console.log("enterd");
 
-module.exports = { signup, login };
+    // const { email } = req.body;
+
+    // const foundUser = await Client.findOne({ email });
+    // console.log("userFound", foundUser);
+
+    // if (!foundUser) {
+    //   console.log("usernot fournd");
+    //   return res.status(400).json({ message: "User does not exist" });
+    // }
+
+    // const resetToken = crypto.randomBytes(20).toString("hex");
+    // foundUser.resetPasswordToken = resetToken;
+    // foundUser.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour from now
+
+    // const newUser = await foundUser.save();
+    // console.log(newUser);
+
+    // Set up nodemailer transporter (update with your email service details)
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+
+      auth: {
+        user: "hemant@adirayglobal.com",
+        pass: "ogmnatcklinhjoyl",
+      },
+    });
+    
+    const mailOptions = {
+      from: "hemant@adirayglobal.com",
+      to: "hemant27134@gmail.com ",
+      cc: ["lalit@threely.io"],
+
+      subject: "Password Reset",
+      // text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+      //   Please click on the following link, or paste this into your browser to complete the process:\n\n
+      //   http://${req.headers.host}/reset/${resetToken}\n\n
+      //   If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+      html: welcome,
+    };
+    //   http://${req.headers.host}/reset/${resetToken}\n\n
+
+    transporter.sendMail(mailOptions, (error, response) => {
+      if (error) {
+        console.error("Error sending email:", error);
+        return res.status(500).json({ message: "Error sending email", error });
+      }
+      console.log("Email sent:", response);
+      res.status(200).json({ message: "Recovery email sent" });
+    });
+  } catch (error) {
+    console.error("Error in forgotPassword:", error);
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+module.exports = { signup, login,forgotPassword };

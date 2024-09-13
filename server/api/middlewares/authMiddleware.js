@@ -28,6 +28,8 @@ const User = require('../models/UserModel'); // User model for database interact
    
 
     req.user = currentUser;
+    console.log("currentUser",currentUser);
+    
     next();
   } catch (error) {
     return next(new AppError('Invalid token. Please log in again.', 401));
