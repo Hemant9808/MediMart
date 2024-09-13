@@ -1,16 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const GET_ALL_PRODUCTS = 'https://medimart-nayg.onrender.com/product/getAllProducts'
+const GET_ALL_PRODUCTS =
+  "https://medimart-nayg.onrender.com/product/getAllProducts/";
+const POST_ALL_PRODUCTS =
+  "https://medimart-nayg.onrender.com/product/addProducts";
 // const POST_PRODUCT_BY_ID = 'https://medimart-nayg.onrender.com/product/getProductById/'
-const GET_PRODUCT_BY_CATEGORY = 'https://medimart-nayg.onrender.com/product/getProductByCategories?'
+const GET_PRODUCT_BY_CATEGORY =
+  "https://medimart-nayg.onrender.com/product/getProductByCategories?";
 // const LOGOUT_API = 'logout'
 
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
   async (_) => {
     try {
-
       const response = await axios.post(GET_ALL_PRODUCTS, {
         headers: {
           "Content-Type": "application/json",
@@ -28,17 +31,18 @@ export const getAllProducts = createAsyncThunk(
 export const categoryProducts = createAsyncThunk(
   "products/categoryProducts",
   async (credentials) => {
-    console.log('categoryProducts credentials:-', credentials);
+    console.log("categoryProducts credentials:-", credentials);
     try {
-        // const formData = new FormData();
+      // const formData = new FormData();
 
-        // formData.append("categories", credentials);
+      // formData.append("categories", credentials);
 
-        // /api/products?category=${categoryName}`
+      // /api/products?category=${categoryName}`
 
-      const response = await axios.get(GET_PRODUCT_BY_CATEGORY + 'categories=' + credentials,
-      )
-      console.log('response- categoryProducts !=',response);
+      const response = await axios.get(
+        GET_PRODUCT_BY_CATEGORY + "categories=" + credentials
+      );
+      console.log("response- categoryProducts !=", response);
 
       return response;
     } catch (error) {
@@ -47,10 +51,42 @@ export const categoryProducts = createAsyncThunk(
     }
   }
 );
+export const addNewProduct = createAsyncThunk(
+  "products/addNewProduct",
+  async (credentials) => {
+    console.log("addNewProduct credentials:-", credentials);
+    try {
+      // const formData = new FormData();
+
+      // formData.append("categories", credentials);
+
+      // /api/products?category=${categoryName}`
+      const dataForm = {
+        name: credentials.name,
+        stock: credentials.stock,
+        price: credentials.price,
+        description: credentials.description,
+        manufacture: credentials.manufacture,
+        categories: credentials.categories,
+        images: credentials.images,
+        brand: credentials.brand,
+      };
+
+      const response = await axios.post(POST_ALL_PRODUCTS, dataForm);
+      console.log("response- addNewProduct !=", response);
+
+      return response;
+    } catch (error) {
+      console.log("addNewProduct error:- ", error);
+      return error.message;
+    }
+  }
+);
 
 const productSlice = createSlice({
   name: "product",
   initialState: {
+    newProduct: "",
     allProductDetails: "",
     categoryWiseProducts: [],
     productByIdDetails: "",
@@ -87,6 +123,21 @@ const productSlice = createSlice({
       })
       .addCase(categoryProducts.rejected, (state, action) => {
         console.log("categoryProducts.rejected", action);
+        state.loading = false;
+        state.error = action.error.message;
+      });
+    builder
+      .addCase(addNewProduct.pending, (state) => {
+        console.log("addNewProduct.pending", state);
+        state.loading = true;
+      })
+      .addCase(addNewProduct.fulfilled, (state, action) => {
+        console.log("addNewProduct.fulfilled", action);
+        state.loading = false;
+        state.newProduct = action.payload.data;
+      })
+      .addCase(addNewProduct.rejected, (state, action) => {
+        console.log("addNewProduct.rejected", action);
         state.loading = false;
         state.error = action.error.message;
       });

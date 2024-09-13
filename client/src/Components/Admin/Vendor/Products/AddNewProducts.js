@@ -1,6 +1,35 @@
-import React from 'react';
-
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addNewProduct } from "../../../../Redux/productSlice/productSlice";
 const AddNewProducts = ({ setEditModal }) => {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [stock, setStock] = useState("");
+  const [manufacture, setManufacture] = useState("");
+  const [brand, setBrand] = useState("");
+  const [categories, setCategories] = useState("");
+  const [images, setImages] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    // e.preventDefault();
+    dispatch(
+      addNewProduct({
+        name: name,
+        price: price,
+        description: description,
+        stock: stock,
+        manufacture: manufacture,
+        brand: brand,
+        categories: categories,
+        images: images,
+      })
+    );
+    console.log("string", name);
+  };
+
   return (
     <section>
       <div className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-filter saturate-150 backdrop-blur-sm">
@@ -50,7 +79,7 @@ const AddNewProducts = ({ setEditModal }) => {
               </div>
             </div>
             {/* Product Details */}
-            <form className="p-5 space-y-8 divide-y divide-gray-200">
+            <div className="p-5 space-y-8 divide-y divide-gray-200">
               <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                 <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-3">
@@ -67,6 +96,74 @@ const AddNewProducts = ({ setEditModal }) => {
                           name="username"
                           id="username"
                           autoComplete="username"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          className="flex-1 block w-full focus:ring-teal-500 focus:border-teal-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-3">
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Stock
+                    </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <div className="max-w-lg flex rounded-md shadow-sm">
+                        <input
+                          type="text"
+                          name="username"
+                          id="username"
+                          autoComplete="username"
+                          value={stock}
+                          onChange={(e) => setStock(e.target.value)}
+                          className="flex-1 block w-full focus:ring-teal-500 focus:border-teal-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-3">
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Price
+                    </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <div className="max-w-lg flex rounded-md shadow-sm">
+                        <input
+                          type="text"
+                          name="username"
+                          id="username"
+                          autoComplete="username"
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
+                          className="flex-1 block w-full focus:ring-teal-500 focus:border-teal-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-3">
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
+                      Manufacture
+                    </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <div className="max-w-lg flex rounded-md shadow-sm">
+                        <input
+                          type="text"
+                          name="username"
+                          id="username"
+                          autoComplete="username"
+                          value={manufacture}
+                          onChange={(e) => setManufacture(e.target.value)}
                           className="flex-1 block w-full focus:ring-teal-500 focus:border-teal-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         />
                       </div>
@@ -85,8 +182,10 @@ const AddNewProducts = ({ setEditModal }) => {
                         id="about"
                         name="about"
                         rows={3}
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         className="max-w-lg shadow-sm block w-full focus:ring-teal-500 focus:border-teal-500 sm:text-sm border border-gray-300 rounded-md"
-                        defaultValue={''}
+                        defaultValue={""}
                       />
                       <p className="mt-2 text-sm text-gray-500">
                         Write a few sentences about product.
@@ -153,6 +252,8 @@ const AddNewProducts = ({ setEditModal }) => {
                         id="country"
                         name="country"
                         autoComplete="country"
+                        value={categories}
+                        onChange={(e) => setCategories(e.target.value)}
                         className="max-w-lg block focus:ring-teal-500 focus:border-teal-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                       >
                         <option>Category 1</option>
@@ -257,13 +358,14 @@ const AddNewProducts = ({ setEditModal }) => {
                   </button>
                   <button
                     type="submit"
+                    onClick={handleSubmit}
                     className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
                   >
                     Save
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
