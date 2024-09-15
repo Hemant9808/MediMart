@@ -146,6 +146,7 @@ addProducts = async (req, res) => {
     } catch (error) {
       res.status(500).send({ message: 'Server error', error: error.message });
     }
+    
   };
 
 
