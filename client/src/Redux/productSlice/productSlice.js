@@ -2,9 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const GET_ALL_PRODUCTS =
-  "https://medimart-nayg.onrender.com/product/getAllProducts/";
+  //"https://medimart-nayg.onrender.com/product/getAllProducts/";
+  "http://localhost:4000/product/getAllProducts/";
 const POST_ALL_PRODUCTS =
   "https://medimart-nayg.onrender.com/product/addProducts";
+//"http://localhost:4000/product/addProducts"
 // const POST_PRODUCT_BY_ID = 'https://medimart-nayg.onrender.com/product/getProductById/'
 const GET_PRODUCT_BY_CATEGORY =
   "https://medimart-nayg.onrender.com/product/getProductByCategories?";
@@ -56,19 +58,19 @@ export const addNewProduct = createAsyncThunk(
   async (credentials) => {
     console.log("addNewProduct credentials:-", credentials);
     try {
-      // const formData = new FormData();
+      const formData = new FormData();
 
-      // formData.append("categories", credentials.categories);
-      // formData.append("stock", credentials.stock);
-      // formData.append("price", credentials.price);
-      // formData.append("name", credentials.name);
-      // formData.append("description", credentials.description);
-      // formData.append("manufacture", credentials.manufacture);
-      // formData.append(
-      //   "images",
-      //   "[https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw1I5PVnPTR0fzvtuABoYgxZ&ust=1726506583866000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwi-squuuMWIAxVFe2wGHYPlOxoQjRx6BAgAEBg]"
-      // );
-      // formData.append("brand", credentials.brand);
+      formData.append("categories", credentials.categories);
+      formData.append("stock", credentials.stock);
+      formData.append("price", credentials.price);
+      formData.append("name", credentials.name);
+      formData.append("description", credentials.description);
+      formData.append("manufacturer", credentials.manufacture);
+      formData.append(
+        "images",
+        "[https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw1I5PVnPTR0fzvtuABoYgxZ&ust=1726506583866000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwi-squuuMWIAxVFe2wGHYPlOxoQjRx6BAgAEBg]"
+      );
+       formData.append("brand", credentials.brand);
 
       // /api/products?category=${categoryName}`
       let image = [
@@ -82,12 +84,13 @@ export const addNewProduct = createAsyncThunk(
         stock: credentials.stock,
         price: credentials.price,
         description: credentials.description,
-        manufacture: credentials.manufacture,
+        manufacturer: credentials.manufacture,
         categories: credentials.categories,
         images: image,
         brand: credentials.brand,
       };
-
+      console.log("dataform",dataForm);
+      
       const response = await axios.post(POST_ALL_PRODUCTS, dataForm, {
         headers: {
           authorization:

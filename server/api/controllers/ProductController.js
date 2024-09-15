@@ -83,6 +83,8 @@ addProducts = async (req, res) => {
     try {
      // Check if the user is an admin
      console.log("req.user.role",);
+     console.log("req.body",req.body);
+     
      
       if (req.user.role !== 'admin') {
         return res.status(403).json({ message: "Only admin is authorized to add products" });
@@ -101,9 +103,9 @@ addProducts = async (req, res) => {
       } = req.body;
   
      
-      if (!name || !description || !price || !categories || !brand || !manufacturer || !stock || !images) {
-        return res.status(400).send({ message: "Please fill in all required fields" });
-      }
+    //   if (!name || !description || !price || !categories || !brand || !manufacturer || !stock || !images) {
+    //     return res.status(400).send({ message: "Please fill in all required fields" });
+    //   }
   
    
   
