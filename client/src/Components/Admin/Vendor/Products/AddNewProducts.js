@@ -8,10 +8,30 @@ const AddNewProducts = ({ setEditModal }) => {
   const [stock, setStock] = useState("");
   const [manufacture, setManufacture] = useState("");
   const [brand, setBrand] = useState("");
-  const [categories, setCategories] = useState("");
+  const [categories, setCategories] = useState([]);
   const [images, setImages] = useState("");
 
   const dispatch = useDispatch();
+
+  const handleImage = (e) => {
+    console.log(e);
+
+    setImages(e.target.files[0]);
+    console.log(images, "nmnjnnmn");
+
+    // const file = e.target.files[0];
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setImages(file);
+    //   };
+    // }
+  };
+
+  const handleCategories = (e) => {
+    console.log(e, "handle");
+    setCategories((pre) => [...pre, e]);
+  };
 
   const handleSubmit = (e) => {
     // e.preventDefault();
@@ -153,6 +173,28 @@ const AddNewProducts = ({ setEditModal }) => {
                       htmlFor="username"
                       className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
                     >
+                      Brand
+                    </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <div className="max-w-lg flex rounded-md shadow-sm">
+                        <input
+                          type="text"
+                          name="username"
+                          id="username"
+                          autoComplete="username"
+                          value={brand}
+                          onChange={(e) => setBrand(e.target.value)}
+                          className="flex-1 block w-full focus:ring-teal-500 focus:border-teal-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-3">
+                    <label
+                      htmlFor="username"
+                      className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+                    >
                       Manufacture
                     </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
@@ -228,6 +270,7 @@ const AddNewProducts = ({ setEditModal }) => {
                                 name="file-upload"
                                 type="file"
                                 className="sr-only"
+                                onChange={handleImage}
                               />
                             </label>
                             <p className="pl-1">or drag and drop</p>
@@ -253,12 +296,13 @@ const AddNewProducts = ({ setEditModal }) => {
                         name="country"
                         autoComplete="country"
                         value={categories}
-                        onChange={(e) => setCategories(e.target.value)}
+                        // onChange={(e) => setCategories(e.target.value)}
+                        onChange={(e) => handleCategories(e.target.value)}
                         className="max-w-lg block focus:ring-teal-500 focus:border-teal-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
                       >
-                        <option>Category 1</option>
-                        <option>Category 2</option>
-                        <option>Category 3</option>
+                        <option value="OTC">OTC</option>
+                        <option value="Baby Care">Baby Care 2</option>
+                        <option value="Supliments"> Supliments</option>
                       </select>
                     </div>
                   </div>

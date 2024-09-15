@@ -58,9 +58,25 @@ export const addNewProduct = createAsyncThunk(
     try {
       // const formData = new FormData();
 
-      // formData.append("categories", credentials);
+      // formData.append("categories", credentials.categories);
+      // formData.append("stock", credentials.stock);
+      // formData.append("price", credentials.price);
+      // formData.append("name", credentials.name);
+      // formData.append("description", credentials.description);
+      // formData.append("manufacture", credentials.manufacture);
+      // formData.append(
+      //   "images",
+      //   "[https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw1I5PVnPTR0fzvtuABoYgxZ&ust=1726506583866000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwi-squuuMWIAxVFe2wGHYPlOxoQjRx6BAgAEBg]"
+      // );
+      // formData.append("brand", credentials.brand);
 
       // /api/products?category=${categoryName}`
+      let image = [
+        {
+          url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw1I5PVnPTR0fzvtuABoYgxZ&ust=1726506583866000&source=images&cd=vfe&opi=89978449&ved=2ahUKEwi-squuuMWIAxVFe2wGHYPlOxoQjRx6BAgAEBg",
+          alt: "parace",
+        },
+      ];
       const dataForm = {
         name: credentials.name,
         stock: credentials.stock,
@@ -68,11 +84,17 @@ export const addNewProduct = createAsyncThunk(
         description: credentials.description,
         manufacture: credentials.manufacture,
         categories: credentials.categories,
-        images: credentials.images,
+        images: image,
         brand: credentials.brand,
       };
 
-      const response = await axios.post(POST_ALL_PRODUCTS, dataForm);
+      const response = await axios.post(POST_ALL_PRODUCTS, dataForm, {
+        headers: {
+          authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
+          "Content-Type": "application/json",
+        },
+      });
       console.log("response- addNewProduct !=", response);
 
       return response;
