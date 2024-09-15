@@ -21,7 +21,8 @@ app.use('/cart',CartRouter)
 
 app.get('/', (req, res) => res.send('welcome our app'));
 
-const CONNECTION_URL = process.env.MONGO_URI;
+//const CONNECTION_URL = process.env.MONGO_URI;
+const CONNECTION_URL ="mongodb+srv://hemant9808:ySEEecsHJArJfzfA@mydb.ovbqzxf.mongodb.net/chatApp"
 const PORT = process.env.PORT || 4000;
 
 mongoose
