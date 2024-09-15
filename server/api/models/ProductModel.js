@@ -20,16 +20,16 @@ const ProductSchema = new Schema(
         price: {
           type: Number,
           required: [true, 'Medicine price is required'],
-          min: [0, 'Price cannot be negative'],
+          min: [0, 'Price cannot be negative'], 
         },
-        categories: {
-          type: [String],
-          required: [true, 'At least one category is required'],
-          enum: {
-            values: ['Prescription', 'OTC', 'Supplements', 'Herbal', 'Ayurvedic'],
-            message: 'Categories can only include: Prescription, OTC, Supplements, Herbal, Ayurvedic',
+        categories:  [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Category', // Referencing the Category schema
+            required: [true, 'At least one category is required'],
+            index: true, // Index for better query performance
           },
-        },
+        ],
         brand: {
           type: String,
           required: [true, 'Medicine brand is required'],
