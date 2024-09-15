@@ -82,7 +82,7 @@ getProductByCategories = async (req, res) => {
 addProducts = async (req, res) => {
     try {
      // Check if the user is an admin
-     console.log("req.user.role",req.user.role);
+     console.log("req.user.role",);
      
       if (req.user.role !== 'admin') {
         return res.status(403).json({ message: "Only admin is authorized to add products" });
@@ -133,6 +133,7 @@ addProducts = async (req, res) => {
         categories: categoryIds.map(cat => cat._id), 
         manufacturer,
         stock,
+        brand,
         images,
         discountPrice, 
       });
