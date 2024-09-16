@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const products = [
   {
@@ -33,6 +34,7 @@ const products = [
 ];
 
 const OrderCart = ({ open, setOpen }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -153,7 +155,7 @@ const OrderCart = ({ open, setOpen }) => {
                       </p>
                       <div className="mt-6">
                         <Link
-                          onClick={() => setOpen(false)}
+                          onClick={() =>{ setOpen(false); navigate('/checkout');}}
                           to="/checkout"
                           className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-500 hover:bg-teal-700"
                         >

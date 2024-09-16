@@ -1,7 +1,66 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Descriptions } from "antd";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+const CartProduct = [
+  {
+    id: 1,
+    name: "Stomach Medicine",
+    category: "Structural (Fabrication)",
+    imageUrl:
+      "https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-26-1-480x480.jpg",
+    quantity: 1,
+    unitPrice: 10.0,
+    totalPrice: 20.0,
+  },
+  {
+    id: 2,
+    name: "Birth Control Pills",
+    category: "Overhead Doors",
+    imageUrl:
+      "https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2021/04/Image-24-480x480.jpg",
+    quantity: 1,
+    unitPrice: 9600.01,
+    totalPrice: 19800.03,
+  },
+  {
+    id: 3,
+    name: "Vitamin C Medicine",
+    category: "Framing (Wood)",
+    imageUrl:
+      "https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-36-1-480x480.jpg",
+    quantity: 1,
+    unitPrice: 1.5,
+    totalPrice: 7.5,
+  },
+];
 
 const Checkout = () => {
+  const [quantity, setquantity] = useState(CartProduct.quantity);
+  const [coupon, setCoupon] = useState("");
+
+
+  const increaseQuantity = () => {
+    setquantity(prevQuantity => prevQuantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1){
+      setquantity(prevQuantity => prevQuantity - 1);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setCoupon(e.target.value);
+  };
+
+  // Handle form submission
+  const handleCouponSubmit = (e) => {
+    e.preventDefault();
+    console.log('Coupon Applied:', coupon);
+
+  };
+
   return (
     <div className="flex justify-center my-6">
       <div className="flex flex-col w-full p-8 text-gray-800 bg-white pin-r pin-y md:w-4/5 lg:w-4/5">
@@ -35,185 +94,70 @@ const Checkout = () => {
               <tr>
                 <td className="pt-2"> </td>
               </tr>
-              <tr>
-                <td className="hidden pb-4 md:table-cell">
-                  <a href="#0">
-                    <img
-                      src="https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-26-1-480x480.jpg"
-                      className="w-20 rounded"
-                      alt="Thumbnail"
-                    />
-                  </a>
-                </td>
-                <td>
-                  <a href="#0">
-                    <p className="mb-2 ">Stomach Medicine</p>
-                    <form action="" method="POST">
-                      <button type="submit" className="text-gray-700">
-                        <small>Structural (Fabrication)</small>
-                      </button>
-                    </form>
-                  </a>
-                </td>
-                <td className="justify-center md:justify-end md:flex md:mt-8">
-                  <div className="flex-1 flex items-end justify-between text-sm">
-                    <div className="border border-gray-400 rounded">
-                      <i className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"></i>
-                      <input
-                        className="mx-2 text-center w-2 font-medium text-gray-800"
-                        type="text"
-                        value="1"
-                      />
 
-                      <i className="fas fa-minus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"></i>
-                    </div>
-                  </div>
-                </td>
-                <td className="text-right px-5 md:table-cell">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-gray-00"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                </td>
-                <td className="hidden text-right md:table-cell">
-                  <span className="text-sm lg:text-base font-medium">
-                    ৳ 10.00
-                  </span>
-                </td>
-                <td className="text-right">
-                  <span className="text-sm lg:text-base font-medium">
-                    ৳ 20.00
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td className="hidden pb-4 md:table-cell">
-                  <a href="#0">
-                    <img
-                      src="https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2021/04/Image-24-480x480.jpg"
-                      className="w-20 rounded"
-                      alt="Thumbnail"
-                    />
-                  </a>
-                </td>
-                <td>
-                  <p className="mb-2">Birth Control Pills</p>
-                  <form action="" method="POST">
-                    <button type="submit" className="text-gray-700">
-                      <small>Overhead Doors</small>
-                    </button>
-                  </form>
-                </td>
-                <td className="justify-center md:justify-end md:flex md:mt-8">
-                  <div className="flex-1 flex items-end justify-between text-sm">
-                    <div className="border border-gray-400 rounded">
-                      <i className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"></i>
-                      <input
-                        className="mx-2 text-center w-2 font-medium text-gray-800"
-                        type="text"
-                        value="1"
+              {CartProduct.map((product) => (
+                <tr key={product.id}>
+                  <td className="hidden pb-4 md:table-cell">
+                    <a href="#0">
+                      <img
+                        src={product.imageUrl}
+                        className="w-20 rounded"
+                        alt={product.name}
                       />
-
-                      <i className="fas fa-minus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="#0">
+                      <p className="mb-2 ">{product.name}</p>
+                      <form action="" method="POST">
+                        <button type="submit" className="text-gray-700">
+                          <small>{product.category}</small>
+                        </button>
+                      </form>
+                    </a>
+                  </td>
+                  <td className="justify-center md:justify-end md:flex md:mt-8">
+                    <div className="flex-1 flex items-end justify-between text-sm">
+                      <div className="border border-gray-400 rounded">
+                        <i className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600" onClick={decreaseQuantity}></i>
+                        <input
+                          className="mx-2 text-center w-2 font-medium text-gray-800"
+                          type="text"
+                          value={quantity}
+                          readOnly
+                        />
+                        <i className="fas fa-minus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600" onClick={increaseQuantity}></i>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="text-right px-5 md:table-cell">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-gray-00"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                </td>
-                <td className="hidden text-right md:table-cell">
-                  <span className="text-sm lg:text-base font-medium">
-                    ৳ 9,600.01
-                  </span>
-                </td>
-                <td className="text-right">
-                  <span className="text-sm lg:text-base font-medium">
-                    ৳ 19,800.03
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td className="hidden pb-4 md:table-cell">
-                  <a href="#0">
-                    <img
-                      src="https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-36-1-480x480.jpg"
-                      className="w-20 rounded"
-                      alt="Thumbnail"
-                    />
-                  </a>
-                </td>
-                <td>
-                  <p className="mb-2">Vitamin C Medicine</p>
-                  <form action="" method="POST">
-                    <button type="submit" className="text-gray-700">
-                      <small>Framing (Wood)</small>
-                    </button>
-                  </form>
-                </td>
-                <td className="justify-center md:justify-end md:flex md:mt-8">
-                  <div className="flex-1 flex items-end justify-between text-sm">
-                    <div className="border border-gray-400 rounded">
-                      <i className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"></i>
-                      <input
-                        className="mx-2 text-center w-2 font-medium text-gray-800"
-                        type="text"
-                        value="1"
+                  </td>
+                  <td className="text-right px-5 md:table-cell">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-gray-00"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                       />
-
-                      <i className="fas fa-minus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"></i>
-                    </div>
-                  </div>
-                </td>
-                <td className="text-right px-5 md:table-cell">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-gray-00"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                </td>
-                <td className="hidden text-right md:table-cell">
-                  <span className="text-sm lg:text-base font-medium">
-                    ৳ 1.50
-                  </span>
-                </td>
-                <td className="text-right">
-                  <span className="text-sm lg:text-base font-medium">
-                    ৳ 7.50
-                  </span>
-                </td>
-              </tr>
+                    </svg>
+                  </td>
+                  <td className="hidden text-right md:table-cell">
+                    <span className="text-sm lg:text-base font-medium">
+                      ৳ {product.unitPrice.toFixed(2)}
+                    </span>
+                  </td>
+                  <td className="text-right">
+                    <span className="text-sm lg:text-base font-medium">
+                      ৳ {product.totalPrice.toFixed(2)}
+                    </span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <hr className="pb-6 mt-6" />
@@ -229,19 +173,21 @@ const Checkout = () => {
                   If you have a coupon code, please enter it in the box below
                 </p>
                 <div className="justify-center md:flex">
-                  <form action="" method="POST">
+                  {/* <form action="" method="POST"> */}
                     <div className="flex items-center w-full h-13 pl-3 bg-gray-100 border rounded-full">
                       <input
                         type="coupon"
                         name="code"
                         id="coupon"
                         placeholder="Apply coupon"
-                        value="90off"
+                        value={coupon}
+                        onChange={handleInputChange}
                         className="w-full bg-gray-100 outline-none appearance-none focus:outline-none active:outline-none"
                       />
                       <button
                         type="submit"
                         className="text-sm flex items-center px-3 py-1 text-white bg-teal-500 rounded-full outline-none md:px-4 hover:bg-teal-700 focus:outline-none active:outline-none"
+                        onClick={handleCouponSubmit}
                       >
                         <svg
                           aria-hidden="true"
@@ -259,7 +205,7 @@ const Checkout = () => {
                         <span className="font-medium">Apply coupon</span>
                       </button>
                     </div>
-                  </form>
+                  {/* </form> */}
                 </div>
               </div>
 
@@ -306,6 +252,7 @@ const Checkout = () => {
               </form>
             </div>
             <div className="lg:px-2 lg:w-1/2">
+              {/* PAYMENT METHOD */}
               <div className="mb-4">
                 <div className="p-3 bg-teal-50 rounded-full mb-3">
                   <h1 className="ml-2 font-semibold text-teal-600 uppercase">
@@ -335,12 +282,13 @@ const Checkout = () => {
                       className="form-radio h-5 w-5 text-gray-600"
                     />
                     <span className="ml-2 text-gray-800 font-medium">
-                      Bkash
+                      Pay Online
                     </span>
                   </label>
                 </div>
               </div>
 
+              {/* ORDER DETAILS */}
               <div className="p-3 bg-teal-50 rounded-full">
                 <h1 className="ml-2 font-semibold text-teal-600 uppercase">
                   Order Details
@@ -409,7 +357,10 @@ const Checkout = () => {
                   </div>
                 </div>
                 <a href="#0">
-                  <Link to="/orderHistory" className="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-teal-500 rounded-full shadow item-center hover:bg-teal-700 focus:shadow-outline focus:outline-none">
+                  <Link
+                    to="/orderHistory"
+                    className="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-teal-500 rounded-full shadow item-center hover:bg-teal-700 focus:shadow-outline focus:outline-none"
+                  >
                     <svg
                       aria-hidden="true"
                       data-prefix="far"

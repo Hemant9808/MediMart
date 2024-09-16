@@ -46,9 +46,10 @@ const ActionIcons = () => {
           </svg>
         </li>
       </Link>
+      {/* Wish List */}
       <li>
         <button
-        onClick={() => setOpen(false)}
+        onClick={() => setOpen(true)}
           className="py-4 relative border-2 border-transparent text-gray-700 rounded-full hover:text-teal-accent-700 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out"
           aria-label="Favorite"
         >
@@ -73,9 +74,10 @@ const ActionIcons = () => {
           </span>
         </button>
       </li>
+      {/* Order Cart */}
       <li>
         <button
-          onClick={() => setOpen(false)}
+          onClick={() => setOpen(true)}
           className="py-4 relative border-2 border-transparent text-gray-800 rounded-full hover:text-teal-accent-700 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"
           aria-label="Cart"
         >
