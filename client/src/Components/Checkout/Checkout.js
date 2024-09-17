@@ -1,4 +1,4 @@
-import { Descriptions } from "antd";
+
 import React, { useState } from "react";
 import PaymentMethod from "./PaymentMethod";
 import OrderDetails from "./OrderDetails";
@@ -41,32 +41,44 @@ const CartProduct = [
 const Checkout = () => {
   const [cartProduct, setCartProduct] = useState(CartProduct);
 
+  // Function to increase quantity
   const increaseQuantity = (id) => {
-    setCartProduct((prevCart) =>
-      prevCart.map((product) =>
-        product.id === id
-          ? {
-              ...product,
-              quantity: product.quantity + 1,
-              totalPrice: (product.quantity + 1) * product.unitPrice,
-            }
-          : product
-      )
-    );
+    const newCart = cartProduct.map((product) => {
+      if (product.id === id) {
+        const newQuantity = product.quantity + 1;
+        const newTotalPrice = newQuantity * product.unitPrice;
+        return {
+          ...product,
+          quantity: newQuantity,
+          totalPrice: newTotalPrice, // Update the total price
+        };
+      }
+      return product;
+    });
+    setCartProduct(newCart);
   };
 
+  // Function to decrease quantity
   const decreaseQuantity = (id) => {
-    setCartProduct((prevCart) =>
-      prevCart.map((product) =>
-        product.id === id && product.quantity > 1
-          ? {
-              ...product,
-              quantity: product.quantity - 1,
-              totalPrice: (product.quantity - 1) * product.unitPrice,
-            }
-          : product
-      )
-    );
+    const newCart = cartProduct.map((product) => {
+      if (product.id === id && product.quantity > 1) {
+        const newQuantity = product.quantity - 1;
+        const newTotalPrice = newQuantity * product.unitPrice;
+        return {
+          ...product,
+          quantity: newQuantity,
+          totalPrice: newTotalPrice, // Update the total price
+        };
+      }
+      return product;
+    });
+    setCartProduct(newCart);
+  };
+
+  // Function to remove product
+  const removeProduct = (id) => {
+    const newCart = cartProduct.filter((product) => product.id !== id);
+    setCartProduct(newCart);
   };
 
   return (
@@ -124,9 +136,9 @@ const Checkout = () => {
                     <div className="flex-1 flex items-end justify-between text-sm">
                       <div className="border border-gray-400 rounded flex items-center">
                         <i
-                          className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"
+                          className="fa-regular fa-plus m-1 py-1 px-2 cursor-pointer font-semibold text-teal-600"
                           onClick={() => increaseQuantity(product.id)}
-                        >+</i>
+                        ></i>
                         <input
                           className="mx-2 text-center w-12 font-medium text-gray-800"
                           type="text"
@@ -134,19 +146,20 @@ const Checkout = () => {
                           readOnly
                         />
                         <i
-                          className="fas fa-minus m-1 py-1 px-4 cursor-pointer font-medium text-teal-600"
+                          className="fa-regular fa-minus m-1 py-1 px-2 cursor-pointer font-semibold text-teal-600"
                           onClick={() => decreaseQuantity(product.id)}
-                        >-</i>
+                        ></i>
                       </div>
                     </div>
                   </td>
                   <td className="text-right px-5 md:table-cell">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-gray-700"
+                      className="h-6 w-6 text-gray-700 cursor-pointer"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      onClick={() => removeProduct(product.id)}  //Remove product on click
                     >
                       <path
                         strokeLinecap="round"

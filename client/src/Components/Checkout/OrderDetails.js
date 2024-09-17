@@ -1,7 +1,73 @@
-import React from "react";
+import React, { useEffect , useState } from "react";
 import { Link } from "react-router-dom";
 
+const CartProduct = [
+  {
+    id: 1,
+    name: "Stomach Medicine",
+    category: "Structural (Fabrication)",
+    imageUrl:
+      "https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-26-1-480x480.jpg",
+    quantity: 1,
+    unitPrice: 10.0,
+    totalPrice: 20.0,
+  },
+  {
+    id: 2,
+    name: "Birth Control Pills",
+    category: "Overhead Doors",
+    imageUrl:
+      "https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2021/04/Image-24-480x480.jpg",
+    quantity: 2,
+    unitPrice: 9600.01,
+    totalPrice: 19800.03,
+  },
+  {
+    id: 3,
+    name: "Vitamin C Medicine",
+    category: "Framing (Wood)",
+    imageUrl:
+      "https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-36-1-480x480.jpg",
+    quantity: 1,
+    unitPrice: 1.5,
+    totalPrice: 7.5,
+  },
+];
+
+
 const OrderDetails = () => {
+
+  const [Subtotal, setSubtotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  //Demo discount and tax rates
+  const discountRate = 0.1;  // 10% discount
+  const taxRate = 0.2;  // 20% tax
+
+
+  useEffect(() => {
+    //calculating the subtotal
+    const newSubTotal = CartProduct.reduce(
+      (acc, product) => acc + product.unitPrice * product.quantity,
+      0
+    );
+    setSubtotal(newSubTotal);
+
+    //calculating the discount
+    const newDiscount = newSubTotal * discountRate;
+    setDiscount(newDiscount);
+
+    //calculating the tax
+    const newTax = (newSubTotal - newDiscount) * taxRate;
+    setTax(newTax);
+
+    //calculating the total
+    const newTotal = newSubTotal - newDiscount + newTax;
+    setTotal(newTotal);
+  }, [CartProduct]);  //recalculate whenever cartProducts changes  
+
   return (
     <div>
       <div className="p-3 bg-teal-50 rounded-full">
@@ -19,7 +85,7 @@ const OrderDetails = () => {
             Subtotal
           </div>
           <div className="lg:px-4 lg:py-2 m-1 lg:text-lg font-medium text-center text-gray-800">
-            ৳ 148,827.53
+            ৳ {Subtotal.toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between pt-2 border-b">
@@ -41,10 +107,10 @@ const OrderDetails = () => {
                 </svg>
               </button>
             </form>
-            Coupon "90off"
+            Coupon "10%off"
           </div>
           <div className="lg:px-4 lg:py-2 m-1 lg:text-lg font-medium text-center text-green-600">
-            ৳ -13,944.77
+            ৳ {discount.toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between pt-2 border-b">
@@ -52,7 +118,7 @@ const OrderDetails = () => {
             New Subtotal
           </div>
           <div className="lg:px-4 lg:py-2 m-1 lg:text-lg font-medium text-center text-gray-800">
-            ৳ 14,882.75
+            ৳ {(Subtotal - discount).toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between pt-2 border-b">
@@ -60,7 +126,7 @@ const OrderDetails = () => {
             Tax
           </div>
           <div className="lg:px-4 lg:py-2 m-1 lg:text-lg font-medium text-center text-gray-800">
-            ৳ 2,976.55
+            ৳ {tax.toFixed(2)}
           </div>
         </div>
         <div className="flex justify-between pt-2 border-b">
@@ -68,7 +134,7 @@ const OrderDetails = () => {
             Total
           </div>
           <div className="lg:px-4 lg:py-2 m-1 lg:text-lg font-medium text-center text-gray-800">
-            ৳ 17,859.3
+            ৳ {total.toFixed(2)}
           </div>
         </div>
         <a href="#0">
