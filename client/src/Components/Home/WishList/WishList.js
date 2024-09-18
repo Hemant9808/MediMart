@@ -154,10 +154,14 @@ const WishList = ({ open, setOpen }) => {
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
+                      
+                      
+
+
                         <Link
                           onClick={() =>{ setOpen(false); navigate('/checkout');}}
                           to="/checkout"
-                          className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-500 hover:bg-teal-700"
+                          className="flex  justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-500 hover:bg-teal-700"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

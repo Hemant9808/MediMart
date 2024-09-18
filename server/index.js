@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const authRouter = require('./api/routes/AuthRouter');
 const productRouter = require('./api/routes/ProductRouter');
 const CartRouter = require('./api/routes/CartRouter');
+const cron = require('node-cron');
 
 require('dotenv').config();
 
@@ -18,6 +19,10 @@ app.use(cors());
 app.use('/auth', authRouter);
 app.use('/product', productRouter);
 app.use('/cart',CartRouter)
+
+cron.schedule('* * * * *', () => {
+  console.log('Running task every minute');
+});
 
 app.get('/', (req, res) => res.send('welcome our app'));
 

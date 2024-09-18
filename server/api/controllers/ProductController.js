@@ -86,9 +86,9 @@ addProducts = async (req, res) => {
      console.log("req.body",req.body);
      
      
-      if (req.user.role !== 'admin') {
-        return res.status(403).json({ message: "Only admin is authorized to add products" });
-      }
+    //   if (req.user.role !== 'admin') {
+    //     return res.status(403).json({ message: "Only admin is authorized to add products" });
+    //   }
   
       const {
         name,
@@ -111,6 +111,8 @@ addProducts = async (req, res) => {
   
      const categoryIds =[];
       for(const categoryName of categories){
+        console.log("inside loop");
+        
         let category = await Category.findOne({name:categoryName})
         if(!category){
              console.log("category inside condition", category);
@@ -125,7 +127,9 @@ addProducts = async (req, res) => {
         categoryIds.push(category._id);
 
       }
-
+      
+      console.log("categoryIds",categoryIds);
+      
   
 
       const newProduct = new Product({
@@ -139,6 +143,7 @@ addProducts = async (req, res) => {
         images,
         discountPrice, 
       });
+  console.log("newProduct",newProduct);
   
    
       await newProduct.save();
@@ -150,6 +155,8 @@ addProducts = async (req, res) => {
     }
     
   };
+
+  
 
 
  

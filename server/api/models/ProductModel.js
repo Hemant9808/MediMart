@@ -51,10 +51,7 @@ const ProductSchema = new Schema(
               type: String,
               required: [true, 'Image URL is required'],
             },
-            alt: {
-              type: String,
-              required: [true, 'Image alt text is required'],
-            },
+            
           },
         ],
        

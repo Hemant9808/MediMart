@@ -157,6 +157,7 @@ const OrderCart = ({ open, setOpen }) => {
                         <Link
                           onClick={() =>{ setOpen(false); navigate('/checkout');}}
                           to="/checkout"
+
                           className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-500 hover:bg-teal-700"
                         >
                           <svg
