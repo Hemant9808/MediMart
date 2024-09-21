@@ -16,13 +16,19 @@ getProductById = async (req, res) => {
     try {
         console.log('getProductById');
         
-        const product = await Product.findById(req.params.id);
-
+        // const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id)
+        .populate('categories', 'name');
         if (!product) {
             return res.status(404).send({ message: 'Product not found' });
         }
+        const productWithCategoryNames = {
+            ...product.toObject(), 
+            categories: product.categories.map(category => category.name),
+        };
 
-        res.status(200).send(product);
+
+        res.status(200).send(productWithCategoryNames);
     } catch (error) {
         if (error.kind === 'ObjectId') {
             return res.status(400).send({ message: 'Invalid product ID' });
@@ -34,9 +40,9 @@ getProductById = async (req, res) => {
 
 deleteProduct = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            return res.status(501).json({message:"only admin is authorize to delete products"})
-        }
+        // if(req.user.role!=='admin'){
+        //     return res.status(501).json({message:"only admin is authorize to delete products"})
+        // }
         const product = await Product.findByIdAndDelete(req.params.id);
 
         if (!product) {
@@ -59,7 +65,7 @@ getProductByCategories = async (req, res) => {
         const categoryId = await Category.findOne({name:category}).select('_id');
         if (!categoryId) {
             return res.status(200).json({ message: 'This category doesnt exists.' });
-        }
+        }``
 
         // Ensure categories is an array
        // const categoryArray = Array.isArray(categories) ? categories : [categories];
