@@ -1,6 +1,6 @@
 const { protect } = require("../middlewares/authMiddleware");
 
-const { addProducts, getAllProducts, getProductById, getProductByCategories } = require("../controllers/ProductController");
+const { addProducts, getAllProducts, getProductById, getProductByCategories, getProductBySubcategories } = require("../controllers/ProductController");
 const express = require('express');
 const { getAllCategories, addOrUpdateCategory } = require("../controllers/CategoryController");
 // const protect=require("../middlewares/authMiddleware")
@@ -13,5 +13,7 @@ router.delete('/deleteProduct/:id',protect,deleteProduct);
 router.get('/getProductByCategories',getProductByCategories);
 router.get('/getAllCategories',getAllCategories);
 router.post('/addOrUpdateCategory',addOrUpdateCategory);
+router.post('/getProductBySubcategories',getProductBySubcategories);
+
     
 module.exports=router;
