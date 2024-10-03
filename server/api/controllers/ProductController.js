@@ -65,6 +65,7 @@ const getProductByCategories = async (req, res) => {
   try {
     const { category } = req.query;
     console.log(category);
+    
     const categoryId = await Category.findOne({ name: category }).select("_id");
     if (!categoryId) {
       return res.status(200).json({ message: "This category doesnt exists." });

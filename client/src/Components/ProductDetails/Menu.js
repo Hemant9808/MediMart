@@ -51,7 +51,7 @@ const Menu = ({ product: { description, totalReview } }) => {
                 Reviews ({totalReview ? totalReview : 0})
               </a>
             </li>
-            <li className="-mb-px  text-center">
+            {/* <li className="-mb-px  text-center">
               <a
                 className={
                   'text-md md:text-lg font-sans font-medium py-3 block leading-normal ' +
@@ -69,7 +69,7 @@ const Menu = ({ product: { description, totalReview } }) => {
               >
                 Vendor Info
               </a>
-            </li>
+            </li> */}
             <li className="-mb-px text-center">
               <a
                 className={

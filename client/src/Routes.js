@@ -78,7 +78,7 @@ const Navigation = () => {
         {/* <Route path="/shopDetails/:vendorId" element={<ShopDetailsPage />} /> */}
         <Route path="/categoryDetails" element={<CategoryDetailsPage />} />
         <Route path="/checkout" element={<CheckoutPage/>} />
-        <Route path="/productDetails" element={<ProductDetails />} />
+        <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="/vendor/:panel" element={<VenderDashboardPage />} />
         <Route path="/allShop" element={<AllShop />} />
         <Route path="/orderHistory" element={<OrderHistory />} />

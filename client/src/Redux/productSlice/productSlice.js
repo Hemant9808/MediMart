@@ -9,8 +9,10 @@ const POST_ALL_PRODUCTS =
 //"http://localhost:4000/product/addProducts"
 // const POST_PRODUCT_BY_ID = 'https://medimart-nayg.onrender.com/product/getProductById/'
 const GET_PRODUCT_BY_CATEGORY =
-  "https://medimart-nayg.onrender.com/product/getProductByCategories?";
-// const LOGOUT_API = 'logout'
+  //"https://medimart-nayg.onrender.com/product/getProductByCategories?";
+  "http://localhost:4000/product/getProductByCategories?";
+
+  // const LOGOUT_API = 'logout'
 
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
@@ -30,6 +32,9 @@ export const getAllProducts = createAsyncThunk(
     }
   }
 );
+
+
+
 export const categoryProducts = createAsyncThunk(
   "products/categoryProducts",
   async (credentials) => {
@@ -42,7 +47,7 @@ export const categoryProducts = createAsyncThunk(
       // /api/products?category=${categoryName}`
 
       const response = await axios.get(
-        GET_PRODUCT_BY_CATEGORY + "categories=" + credentials
+        GET_PRODUCT_BY_CATEGORY + "category=" + credentials
       );
       console.log("response- categoryProducts !=", response);
 
