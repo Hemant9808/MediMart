@@ -2,6 +2,7 @@ const Product = require("../models/ProductModel");
 const Category = require("../models/CategoryModel");
 const checkFields = require("../utils/validator");
 const Subcategory = require("../models/SubcategoryModel");
+const { uploadOnCloudinary } = require("../utils/cloudinary.js");
 
 getAllProducts = async (req, res) => {
   try {
@@ -17,17 +18,18 @@ getProductById = async (req, res) => {
     console.log("getProductById");
 
     // const product = await Product.findById(req.params.id);
-    const product = await Product.findById(req.params.id).populate(
-      "categories",
-      "name"
-    ).populate("subcategories", "name");
+    const product = await Product.findById(req.params.id)
+      .populate("categories", "name")
+      .populate("subcategories", "name");
     if (!product) {
       return res.status(404).send({ message: "Product not found" });
     }
     const productWithCategoryNames = {
       ...product.toObject(),
       categories: product.categories.map((category) => category.name),
-      subcategories:product.subcategories.map((subcategory)=>subcategory.name),
+      subcategories: product.subcategories.map(
+        (subcategory) => subcategory.name
+      ),
     };
 
     res.status(200).send(productWithCategoryNames);
@@ -68,15 +70,12 @@ const getProductByCategories = async (req, res) => {
       return res.status(200).json({ message: "This category doesnt exists." });
     }
 
-    
     // const categoryArray = Array.isArray(categories) ? categories : [categories];
 
     const products = await Product.find({ categories: { $in: categoryId } });
 
     if (products.length === 0) {
-      return res
-        .status(404)
-        .json(products);
+      return res.status(404).json(products);
     }
     res.status(200).json(products);
   } catch (error) {
@@ -87,9 +86,9 @@ const getProductByCategories = async (req, res) => {
 
 const getProductBySubcategories = async (req, res) => {
   try {
-    const { subcategoryIds } = req.body; 
+    const { subcategoryIds } = req.body;
     const products = await Product.find({
-      subcategories : { $in: subcategoryIds },
+      subcategories: { $in: subcategoryIds },
     });
 
     if (!products || products.length === 0) {
@@ -103,7 +102,6 @@ const getProductBySubcategories = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
 
 const addProducts = async (req, res) => {
   try {
@@ -154,7 +152,7 @@ const addProducts = async (req, res) => {
 
           subcategory = new Subcategory({
             name: subcategoryName,
-            parentCategory: categoryIds[0], 
+            parentCategory: categoryIds[0],
           });
           await subcategory.save();
           console.log("Added new subcategory:", subcategory);
@@ -166,26 +164,33 @@ const addProducts = async (req, res) => {
     console.log("Category IDs:", categoryIds);
     console.log("Subcategory IDs:", subcategoryIds);
 
-
     let product;
     if (_id) {
       console.log("product update sucessfully");
-      product = await Product.findByIdAndUpdate(_id, {
-        name,
-        description,
-        price,
-        categories: categoryIds,
-        subcategories: subcategoryIds,
-        manufacturer,
-        stock,
-        brand,
-        images,
-        discountPrice
-      }, { new: true }); 
-      res.send({success:200,message:"product updated successfully",product})
+      product = await Product.findByIdAndUpdate(
+        _id,
+        {
+          name,
+          description,
+          price,
+          categories: categoryIds,
+          subcategories: subcategoryIds,
+          manufacturer,
+          stock,
+          brand,
+          images,
+          discountPrice,
+        },
+        { new: true }
+      );
+      res.send({
+        success: 200,
+        message: "product updated successfully",
+        product,
+      });
     } else {
       console.log("product created sucessfully");
-      
+
       product = new Product({
         name,
         description,
@@ -196,20 +201,21 @@ const addProducts = async (req, res) => {
         stock,
         brand,
         images,
-        discountPrice
+        discountPrice,
       });
       await product.save();
-      res.send({success:200,message:"product added successfully",product})
-
+      res.send({
+        success: 200,
+        message: "product added successfully",
+        product,
+      });
     }
-
-
 
     // const newProduct = new Product({
     //   name,
     //   description,
     //   price,
-    //   categories: categoryIds, 
+    //   categories: categoryIds,
     //   subcategories: subcategoryIds,
     //   manufacturer,
     //   stock,
@@ -228,6 +234,33 @@ const addProducts = async (req, res) => {
   }
 };
 
+const uploadImage = async (req, res) => {
+  const coverImageLocalPath = req.file?.path;
+  console.log("coverImageLocalPath", coverImageLocalPath);
+
+  if (!coverImageLocalPath) {
+    throw new ApiError(400, "Cover image file is missing");
+  }
+
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+  console.log("coverImage", coverImage);
+
+  if (!coverImage.url) {
+    throw new ApiError(400, "Error while uploading on avatar");
+  }
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        coverImage: coverImage.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+
+  return res.status(200).json(coverImage.url);
+};
+
 module.exports = {
   addProducts,
   getProductById,
@@ -235,4 +268,5 @@ module.exports = {
   getAllProducts,
   getProductByCategories,
   getProductBySubcategories,
+  uploadImage,
 };

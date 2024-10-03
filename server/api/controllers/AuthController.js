@@ -2,13 +2,12 @@ const authController = {};
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
-const {
-  signUpValidation,
-  loginValidation,
-} = require("../validations/AuthValidation");
+const crypto = require('crypto');
+
 const nodemailer = require("nodemailer");
 const AppError = require("../utils/error");
 const { payment, welcome } = require("../utils/constant");
+const sendEmail = require("../utils/nodemailer");
 
 const key = process.env.SECRET_KEY;
 const signToken = (id) => {
@@ -96,65 +95,78 @@ login = async (req, res,next) => {
   }
 };
 
-  forgotPassword = async (req, res) => {
+
+forgotPassword = async (req, res, next) => {
   try {
-    //console.log( "useridfromfrogotpasswrd" ,req.body.user?._id);
+    const { email } = req.body;
 
-    console.log("enterd");
+    var user = await User.findOne({ email });
 
-    // const { email } = req.body;
+    if (!user) {
+      return next(new AppError('No user found with that email', 404));
+    }
 
-    // const foundUser = await Client.findOne({ email });
-    // console.log("userFound", foundUser);
+    const resetToken = user.createPasswordResetToken();
+   console.log("resetToken",resetToken);
+   
+    await user.save({ validateBeforeSave: false });
 
-    // if (!foundUser) {
-    //   console.log("usernot fournd");
-    //   return res.status(400).json({ message: "User does not exist" });
-    // }
-
-    // const resetToken = crypto.randomBytes(20).toString("hex");
-    // foundUser.resetPasswordToken = resetToken;
-    // foundUser.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour from now
-
-    // const newUser = await foundUser.save();
-    // console.log(newUser);
-
-    // Set up nodemailer transporter (update with your email service details)
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-
-      auth: {
-        user: "hemant@adirayglobal.com",
-        pass: "ogmnatcklinhjoyl",
-      },
-    });
-    
-    const mailOptions = {
-      from: "hemant@adirayglobal.com",
-      to: "hemant27134@gmail.com ",
-      cc: ["lalit@threely.io"],
-
-      subject: "Password Reset",
-      // text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
-      //   Please click on the following link, or paste this into your browser to complete the process:\n\n
-      //   http://${req.headers.host}/reset/${resetToken}\n\n
-      //   If you did not request this, please ignore this email and your password will remain unchanged.\n`,
-      html: welcome,
+    const resetURL = `${req.protocol}://${req.get('host')}/resetPassword/${resetToken}`;
+     console.log("resetURL",resetURL);
+     
+    const emailOptions = {
+      email: user.email,
+      subject: 'Your password reset token (valid for 10 minutes)',
+      message: `Forgot your password? Submit a PATCH request with your new password to: ${resetURL}. If you didn't request this, please ignore this email.`,
     };
-    //   http://${req.headers.host}/reset/${resetToken}\n\n
 
-    transporter.sendMail(mailOptions, (error, response) => {
-      if (error) {
-        console.error("Error sending email:", error);
-        return res.status(500).json({ message: "Error sending email", error });
-      }
-      console.log("Email sent:", response);
-      res.status(200).json({ message: "Recovery email sent" });
-    });
+    await sendEmail(emailOptions);
+
+    res.status(200).send({ message: 'Token sent to email!' });
   } catch (error) {
-    console.error("Error in forgotPassword:", error);
-    res.status(500).json({ message: "Server Error", error });
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false });
+
+    return next(new AppError('Error sending the email. Try again later!', 500));
   }
 };
 
-module.exports = { signup, login,forgotPassword };
+
+
+resetPassword = async (req, res, next) => {
+  try {
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return next(new AppError('Token is invalid or has expired', 400));
+    }
+
+    user.password = req.body.password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save();
+
+    const token = signToken(user.id);
+    res.status(200).send({ token, message: 'Password reset successful!' });
+  } catch (error) {
+    console.log("Error",error);
+    
+    return next(new AppError('Something went wrong', 500));
+  }
+};
+
+
+
+  
+
+module.exports = { signup, login,forgotPassword,resetPassword };
