@@ -71,8 +71,8 @@ const Categories = () => {
         Product Category
       </h1>
       <div className=" ">
-        {categories.map((singleCategory) => (
-          <div className="m-2" onClick={ () =>  switchCategory(singleCategory.categoryName)}>
+        {categories.map((singleCategory,index) => (
+          <div key={index} className="m-2" onClick={ () =>  switchCategory(singleCategory.categoryName)}>
             <ul>
               <li className={`bg-teal-50 hover:bg-teal-100 shadow-4xl my-4 p-2 cursor-pointer `} 
                style={{ backgroundColor: selectCategory === singleCategory?.categoryName ? 'lightgreen' : '' }}>

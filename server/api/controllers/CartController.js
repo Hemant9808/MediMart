@@ -7,8 +7,8 @@ const calculateCartTotal = (items) => {
   let totalPrice = 0;
 
   items.forEach((item) => {
-    totalItems += item.quantity;
-    totalPrice += item.price * item.quantity;
+    totalItems = item.quantity;
+    totalPrice = item.price * item.quantity;
     console.log("inside funtion", item.quantity, item.price);
   });
 
@@ -23,8 +23,10 @@ const addToCart = async (req, res) => {
     const userId = req.user._id;
     console.log("userId", req.user._id);
 
-    let cart = await Cart.findOne({ userId });
-    console.log("cart found or not");
+    var cart = await Cart.findOne({ userId }).populate(
+      "items.productId",
+      "price name images brand"
+    );    console.log("cart found or not");
 
     if (cart) {
       console.log("cart found");
@@ -33,7 +35,7 @@ const addToCart = async (req, res) => {
         item.productId.equals(productId)
       );
       if (existingItemIndex > -1) {
-        cart.items[existingItemIndex].quantity += quantity;
+        cart.items[existingItemIndex].quantity = quantity;
       } else {
         console.log("pushing items", productId, price, quantity);
 
@@ -73,7 +75,7 @@ const addToCart = async (req, res) => {
     await cart.save();
     res.status(200).json(cart);
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -83,7 +85,7 @@ getUserCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId }).populate(
       "items.productId",
-      "price "
+      "price name images brand"
     );
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
@@ -95,12 +97,15 @@ getUserCart = async (req, res) => {
 };
 
 removeItemFromCart = async (req, res) => {
-  const { productId } = req.body;
+  const { productId } = req.params;
   const userId = req.user.id;
-
+  console.log("productId",productId);
+ 
   try {
-    const cart = await Cart.findOne({ userId });
-    if (!cart) {
+    const cart = await Cart.findOne({ userId }).populate(
+      "items.productId",
+      "price name images brand"
+    );    if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
 

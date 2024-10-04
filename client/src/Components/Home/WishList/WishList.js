@@ -1,9 +1,11 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { addToCart, fetchCart, removeFromCart } from '../../../Redux/cartSlice/cartSlice';
 
 const products = [
     {
@@ -32,9 +34,118 @@ const products = [
     },
     // More products...
   ];
+  
+  
 
 const WishList = ({ open, setOpen }) => {
   const navigate = useNavigate();
+  const [cartDetails,setCartDetails]=useState({
+    items:[],
+    totalPrice:0,
+    totalItems:0
+  })
+
+  // const fetchCart =()=>{
+  //   const {cart} = useSelector((state)=>state.CartDetails)
+  //   setCartDetails({
+  //     items:cart.items,
+  //     totalPrice:cart.totalPrice,
+  //     totalItems:cart.totalItems,
+  //    });
+  // }
+
+
+  const {cart} = useSelector((state)=>state.CartDetails)
+//console.log("cart",cart);
+
+ const dispatch = useDispatch()
+  useEffect(()=>{
+    setCartDetails({
+      items:cart.items,
+      totalPrice:cart.totalPrice,
+      totalItems:cart.totalItems,
+     });
+  },[cart])
+ // console.log("cart form wishlist",cartDetails);
+
+  const handleRemove = (productId) => {
+    //console.log(productId);
+    
+     dispatch(removeFromCart(productId));
+      dispatch(fetchCart())
+  }
+
+  const [selectedProduct,setSelectedProduct]=useState()
+  // const updateCart =()=>{
+  //   dispatch(addToCart(selectedProduct))
+  // }
+//   const handleQuantityChange = (product, action) => {
+//     console.log("product",product);
+    
+//     const newQuantity = action === 'increase' ? product.quantity + 1 : product.productId.quantity - 1;
+//     console.log("newQuantity",newQuantity);
+    
+//     if (newQuantity < 1) return; // Prevents decreasing quantity below 1
+
+//     // Update selected product state
+//      setSelectedProduct({
+//       productId: product.productId._id,
+//       quantity: newQuantity,
+//       price: product.productId.price
+//     });
+//  console.log("selectedProduct",selectedProduct);
+ 
+
+//     // Update the cart
+//     updateCart();
+//   };
+
+const updateCart = (productId, price, quantity) => {
+  const product = { productId, price, quantity };
+  dispatch(addToCart(product));
+};
+
+// Handle Quantity Increment/Decrement
+const handleQuantityChange = (productId, action, price, currentQuantity) => {
+  console.log("productId",productId);
+  
+  console.log("currentQuantity",currentQuantity);
+  
+  const newQuantity = action === 'increase' ? currentQuantity + 1 : currentQuantity - 1;
+  console.log("newQuantity",newQuantity);
+  
+  if (newQuantity < 1) return; // Don't allow quantity to be less than 1
+
+  setCartDetails((prevDetails) => {
+    const updatedItems = prevDetails?.items?.map((item) => {
+      if (item?.productId?._id === productId) {
+        return {
+          ...item,
+          productId: {
+            ...item?.productId,
+            quantity: newQuantity,
+          },
+        };
+      }
+      return item;
+    });
+
+    // Update total price based on the new quantity
+    const updatedTotalPrice = updatedItems.reduce(
+      (sum, item) => sum + item?.productId?.price * item?.productId?.quantity,
+      0
+    );
+
+    return {
+      ...prevDetails,
+      items: updatedItems,
+      totalPrice: updatedTotalPrice,
+    };
+  });
+
+  // Update cart with new quantity
+  updateCart(productId,price, newQuantity);
+};
     return (
         <div>
             <Transition.Root show={open} as={Fragment}>
@@ -66,7 +177,11 @@ const WishList = ({ open, setOpen }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <div className="w-screen max-w-md font-sans">
+                <div  
+                
+                 className="w-screen max-w-md font-sans"
+                 onClick={(e) => e.stopPropagation()}
+                 >
                   <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                     <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
                       <div className="flex items-start justify-between">
@@ -77,7 +192,7 @@ const WishList = ({ open, setOpen }) => {
                           <button
                             type="button"
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={() => setOpen(false)}
+                            //onClick={() => setOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
                             <FontAwesomeIcon
@@ -93,13 +208,16 @@ const WishList = ({ open, setOpen }) => {
                           <ul
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
+                            onClick={()=>setOpen(true)}
                           >
-                            {products.map((product) => (
-                              <li key={product.id} className="py-6 flex">
+                          
+
+                            {cartDetails?.items?.map((product,index) => (
+                              <li key={index} className="py-6 flex">
                                 <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                   <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
+                                    src={'https://wpbingosite.com/wordpress/fuho/wp-content/uploads/2020/12/Image-26-1-480x480.jpg' || product.productId.images[0].url  }
+                                    //alt={product.imageAlt}
                                     className="w-full h-full object-center object-cover"
                                   />
                                 </div>
@@ -108,28 +226,35 @@ const WishList = ({ open, setOpen }) => {
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-800">
                                       <h3>
-                                        <a href={product.href}>
-                                          {product.name}
+                                        <a 
+                                       // href={product.href}
+                                        >
+                                          {product?.productId?.name}
                                         </a>
                                       </h3>
-                                      <p className="ml-4">৳ {product.price}</p>
+                                      <p className="ml-4">৳ {product?.productId?.price}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
-                                      {product.color}
+                                      green
                                     </p>
                                   </div>
                                   <div className="flex-1 flex items-end justify-between text-sm">
-                                    <div className="border border-gray-300 rounded">
-                                      <i className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-normal text-teal-600"></i>
-                                      <span className="mx-2 text-center w-1 text-gray-900">
-                                        {product.quantity}
-                                      </span>
+                                    <div className="border flex justify-center items-center border-gray-300 rounded">
+                                      <i
+                                      onClick={() => handleQuantityChange(product?.productId?._id, 'decrease',product?.productId?.price, product?.quantity)}
+                                       className=" m-1 py-1 px-4 cursor-pointer font-normal text-teal-600">--</i>
+                                      <div className="  w-15 text-center items-center  h-5 text-gray-900">
+                                        {product?.quantity}
+                                      </div>
 
-                                      <i className="fas fa-minus m-1 py-1 px-4 cursor-pointer font-normal text-teal-600"></i>
+                                      <i
+                                      onClick={() => handleQuantityChange(product?.productId?._id, 'increase',product?.productId?.price, product?.quantity)}
+                                       className="fas fa-plus m-1 py-1 px-4 cursor-pointer font-normal text-teal-600"></i>
                                     </div>
 
                                     <div className="flex">
                                       <button
+                                     onClick={()=>handleRemove(product?.productId?._id)}
                                         type="button"
                                         className="font-medium tracking-wide text-teal-600 hover:text-teal-800"
                                       >
@@ -148,7 +273,7 @@ const WishList = ({ open, setOpen }) => {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-800">
                         <p>Subtotal</p>
-                        <p>৳ 262.00</p>
+                        <p>{cartDetails?.totalPrice}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.

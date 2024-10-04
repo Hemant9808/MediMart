@@ -53,7 +53,7 @@ export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (productId) => {
     try {
-      const response = await axios.delete(`${CART_API_BASE_URL}/${productId}`, {
+      const response = await axios.delete(`${CART_API_BASE_URL}/removeItemFromCart/${productId}`, {
         headers: {
           authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
@@ -94,14 +94,24 @@ export const updateCartItem = createAsyncThunk(
 const cartSlice = createSlice({
   name: "CartDetails",
   initialState: {
-    cart: null,
+    cart: {
+      items:[],
+      totalPrice:0,
+      totalItems:0,
+      
+    },
+    
 
     loading: false,
     error: null,
   },
   reducers: {
     clearCart: (state) => {
-      state.cart = null;
+      state.cart = {
+        items: [],
+        totalItems: 0,
+        totalPrice: 0,
+      };
       state.loading = false;
       state.error = null;
     },
@@ -120,7 +130,7 @@ const cartSlice = createSlice({
         state.cart = {
           items: action.payload.items,
           totalItems: action.payload.totalItems,
-          totalPrice: action.payload.totalPrice,
+          totalPrice: action.payload  .totalPrice,
         };
       })
       .addCase(fetchCart.rejected, (state, action) => {
@@ -137,7 +147,11 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload; 
+        state.cart = {
+          items: action.payload.items,
+          totalItems: action.payload.totalItems,
+          totalPrice: action.payload.totalPrice,
+        };
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
@@ -151,7 +165,11 @@ const cartSlice = createSlice({
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.cart = action.payload; 
+        state.cart = {
+          items: action.payload.items,
+          totalItems: action.payload.totalItems,
+          totalPrice: action.payload  .totalPrice,
+        };
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
