@@ -3,6 +3,7 @@ const Category = require("../models/CategoryModel");
 const checkFields = require("../utils/validator");
 const Subcategory = require("../models/SubcategoryModel");
 const { uploadOnCloudinary } = require("../utils/cloudinary.js");
+const User = require("../models/UserModel.js");
 
 getAllProducts = async (req, res) => {
   try {
@@ -135,7 +136,7 @@ const addProducts = async (req, res) => {
 
     let findCategory = await Category.findOne({ name: category[0] });
     console.log("findCategory", findCategory);
-
+      
     categoryIds.push(findCategory._id);
     console.log("categoryIds", categoryIds);
 
@@ -167,7 +168,7 @@ const addProducts = async (req, res) => {
 
     let product;
     if (_id) {
-      console.log("product update sucessfully");
+      console.log("product update sucessfully",_id);
       product = await Product.findByIdAndUpdate(
         _id,
         {
@@ -182,13 +183,20 @@ const addProducts = async (req, res) => {
           images,
           discountPrice,
         },
-        { new: true }
+        { new: true } 
+        
+        
+        //{ new: true }
+        
       );
+      console.log("product found",product);
       res.send({
-        success: 200,
+        success: true,
         message: "product updated successfully",
         product,
       });
+      console.log("product update sucessfully");
+
     } else {
       console.log("product created sucessfully");
 
@@ -249,15 +257,15 @@ const uploadImage = async (req, res) => {
   if (!coverImage.url) {
     throw new ApiError(400, "Error while uploading on avatar");
   }
-  const user = await User.findByIdAndUpdate(
-    req.user?._id,
-    {
-      $set: {
-        coverImage: coverImage.url,
-      },
-    },
-    { new: true }
-  ).select("-password");
+  // const user = await User.findByIdAndUpdate(
+  //   req.user?._id,
+  //   {
+  //     $set: {
+  //       coverImage: coverImage.url,
+  //     },
+  //   },
+  //   { new: true }
+  // ).select("-password");
 
   return res.status(200).json(coverImage.url);
 };
