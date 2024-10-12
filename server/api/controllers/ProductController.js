@@ -245,20 +245,28 @@ const addProducts = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
-  const coverImageLocalPath = req.file?.path;
-  console.log("coverImageLocalPath", coverImageLocalPath);
-
-  if (!coverImageLocalPath) {
-    throw new ApiError(400, "Cover image file is missing");
+  try {
+    const coverImageLocalPath = req.file?.path;
+    console.log("coverImageLocalPath", coverImageLocalPath);
+  
+    if (!coverImageLocalPath) {
+      throw new ApiError(400, "Cover image file is missing");
+    }
+  
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    console.log("coverImage", coverImage);
+  
+    if (!coverImage.url) {
+      throw new ApiError(400, "Error while uploading on avatar");
+    }
+    return res.status(200).json(coverImage.url);
+    
+  } catch (error) {
+    console.log(error);
+    
+    res.send(error)
   }
-
-  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-  console.log("coverImage", coverImage);
-
-  if (!coverImage.url) {
-    throw new ApiError(400, "Error while uploading on avatar");
-  }
-  return res.status(200).json(coverImage.url);
+ 
 };
 
 const addPrescription =async(req,res)=>{
