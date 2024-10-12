@@ -4,6 +4,7 @@ const checkFields = require("../utils/validator");
 const Subcategory = require("../models/SubcategoryModel");
 const { uploadOnCloudinary } = require("../utils/cloudinary.js");
 const User = require("../models/UserModel.js");
+const Prescription = require("../models/PrescriptionModel.js");
 
 getAllProducts = async (req, res) => {
   try {
@@ -257,18 +258,36 @@ const uploadImage = async (req, res) => {
   if (!coverImage.url) {
     throw new ApiError(400, "Error while uploading on avatar");
   }
-  // const user = await User.findByIdAndUpdate(
-  //   req.user?._id,
-  //   {
-  //     $set: {
-  //       coverImage: coverImage.url,
-  //     },
-  //   },
-  //   { new: true }
-  // ).select("-password");
-
   return res.status(200).json(coverImage.url);
 };
+
+const addPrescription =async(req,res)=>{
+  try {
+    const {url} = req.body;
+    console.log("url",url);
+    
+    console.log("req.body.user",req.user);
+    
+   const userId = req.user._id;
+   console.log("userId",userId);
+   
+   const prescription =  new Prescription({
+    userId,
+    url
+   })
+   const response= await prescription.save();
+   console.log("Response",response);
+   
+   res.send(response);
+  } catch (error) {
+    console.log("error",error);
+    
+    res.send(error.message)
+  }
+   
+
+}
+
 
 module.exports = {
   addProducts,
@@ -278,4 +297,5 @@ module.exports = {
   getProductByCategories,
   getProductBySubcategories,
   uploadImage,
+  addPrescription
 };

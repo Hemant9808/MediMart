@@ -4,6 +4,7 @@ const User = require('../models/UserModel'); // User model for database interact
 
  const protect = async (req, res, next) => {
   try {
+
     const authHeader = req.headers.authorization;
     console.log("authHeader",authHeader);
      
@@ -24,8 +25,6 @@ const User = require('../models/UserModel'); // User model for database interact
     if (!currentUser) {
       return next(new AppError('The user belonging to this token no longer exists.', 401));
     }
-
-   
 
     req.user = currentUser;
     console.log("currentUser",currentUser);
