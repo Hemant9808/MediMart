@@ -257,7 +257,7 @@ const uploadImage = async (req, res) => {
     console.log("coverImage", coverImage);
   
     if (!coverImage.url) {
-      throw new ApiError(400, "Error while uploading on avatar");
+      throw new ApiError(400, "Error while uploading on image");
     }
     return res.status(200).json(coverImage.url);
     
@@ -296,6 +296,23 @@ const addPrescription =async(req,res)=>{
 
 }
 
+const getAllPrescription =async(req,res)=>{
+  console.log('entered');
+  
+  try {
+    const data = await Prescription.find().populate("userId", "userName _id email");
+    console.log("data",data);
+    
+    res.send(data);
+
+  } catch (error) {
+    res.send(error.message)
+    console.log(error)
+  }
+
+
+}
+
 
 module.exports = {
   addProducts,
@@ -305,5 +322,6 @@ module.exports = {
   getProductByCategories,
   getProductBySubcategories,
   uploadImage,
-  addPrescription
+  addPrescription,
+  getAllPrescription
 };

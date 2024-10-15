@@ -1,6 +1,6 @@
 const { protect } = require("../middlewares/authMiddleware");
 
-const { addProducts, getAllProducts, getProductById, getProductByCategories, getProductBySubcategories, uploadImage, addPrescription } = require("../controllers/ProductController");
+const { addProducts, getAllProducts, getProductById, getProductByCategories, getProductBySubcategories, uploadImage, addPrescription, getAllPrescription } = require("../controllers/ProductController");
 const express = require('express');
 const { getAllCategories, addOrUpdateCategory } = require("../controllers/CategoryController");
 const { upload } = require("../middlewares/multer.middileware");
@@ -18,6 +18,8 @@ router.post('/addOrUpdateCategory',addOrUpdateCategory);
 router.post('/getProductBySubcategories',getProductBySubcategories);
 router.post("/upload-image" ,upload.single("file"), uploadImage)
 router.post("/addPrescription" ,protect, addPrescription)
+router.get("/getAllPrescription" , getAllPrescription)
+
 
     
 module.exports=router;

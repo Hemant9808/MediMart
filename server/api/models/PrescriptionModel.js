@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const prescriptionSchema = new Schema({
   userId:{
-    type:String,
-    required:true,
+     type:mongoose.Schema.Types.ObjectId,
+     ref:'User'
 
   },
   url:{

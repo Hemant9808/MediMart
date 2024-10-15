@@ -3,9 +3,11 @@ import { useDispatch } from "react-redux";
 // import { createAccount } from "../../../Redux/user/actions";
 import { createAccount} from '../../../Redux/authSlice/authSlice'
 import FormValidation from "../../../Validation/FormValidation";
+import { useNavigate } from 'react-router-dom';
 
 const Registration = ({ setIsAccount }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
   const [errorData, setErrorData] = useState({});
@@ -37,6 +39,7 @@ const Registration = ({ setIsAccount }) => {
     e.preventDefault();
     // recheckUserInput();
     dispatch(createAccount(formData));
+    navigate('/');
     const { firstName, lastName, userName, phone, email, password, cmPassword } =
       formData;
     // if (

@@ -5,11 +5,11 @@ import {loginAccount} from '../../../Redux/authSlice/authSlice'
 import FormValidation from '../../../Validation/FormValidation';
 import Registration from '../Registration/Registration';
 import './Login.css';
-
+import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const [isAccount, setIsAccount] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [errorData, setErrorData] = useState({});
 
@@ -42,6 +42,8 @@ const LoginForm = () => {
     dispatch(loginAccount(formData))
     .then((res) => {
       console.log("res login:", res);
+      navigate('/');
+
     })
     .catch((error) => {
         console.error("Failed to login:", error);
