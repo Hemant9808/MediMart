@@ -17,6 +17,7 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
     console.log("response.data.", response.data.items);
 
     return response.data;
+    
   } catch (error) {
     console.log("addNewProduct error:- ", error);
     return error.message;

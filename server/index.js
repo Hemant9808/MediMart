@@ -6,6 +6,8 @@ const authRouter = require('./api/routes/AuthRouter');
 const productRouter = require('./api/routes/ProductRouter');
 const CartRouter = require('./api/routes/CartRouter');
 const CategoryRouter = require('./api/routes/CategoryRouter');
+const OrderRoutes = require('./api/routes/OrderRouter');
+
 
 const cron = require('node-cron');
 
@@ -22,6 +24,8 @@ app.use('/auth', authRouter);
 app.use('/product', productRouter);
 app.use('/cart',CartRouter)
 app.use('/category',CategoryRouter)
+app.use('/order',OrderRoutes);
+
 
 cron.schedule('* * * * *', () => {
   console.log('Running task every minute');

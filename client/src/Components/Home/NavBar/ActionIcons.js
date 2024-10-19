@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import OrderCart from '../OrderCart/OrderCart';
 import WishList from '../WishList/WishList';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart } from '../../../Redux/cartSlice/cartSlice';
 
 const ActionIcons = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchCart())
+   },[])
+   const { cart } = useSelector((state) => state.CartDetails );  console.log("cart",cart);
 
   return (
     <>
@@ -97,7 +104,7 @@ const ActionIcons = () => {
           </svg>
           <span className="absolute inset-0 object-right-top -mr-6">
             <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-teal-400 text-white">
-              7
+             {cart.items.length}
             </div>
           </span>
         </button>

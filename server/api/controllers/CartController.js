@@ -7,8 +7,8 @@ const calculateCartTotal = (items) => {
   let totalPrice = 0;
 
   items.forEach((item) => {
-    totalItems = item.quantity;
-    totalPrice = item.price * item.quantity;
+    totalItems = totalItems+item.quantity;
+    totalPrice = totalPrice+item.price * item.quantity;
     console.log("inside funtion", item.quantity, item.price);
   });
 
@@ -20,6 +20,8 @@ const addToCart = async (req, res) => {
 
   try {
     let { productId, quantity, price } = req.body;
+    console.log(productId, quantity, price);
+    
     const userId = req.user._id;
     console.log("userId", req.user._id);
 
@@ -29,10 +31,10 @@ const addToCart = async (req, res) => {
     );    console.log("cart found or not");
 
     if (cart) {
-      console.log("cart found");
+      console.log("cart found",cart);
 
       const existingItemIndex = cart.items.findIndex((item) =>
-        item.productId.equals(productId)
+        item.productId?._id?.equals(productId)
       );
       if (existingItemIndex > -1) {
         cart.items[existingItemIndex].quantity = quantity;
@@ -87,6 +89,7 @@ getUserCart = async (req, res) => {
       "items.productId",
       "price name images brand"
     );
+    console.log("getUserCart",cart);
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
@@ -100,6 +103,8 @@ removeItemFromCart = async (req, res) => {
   const { productId } = req.params;
   const userId = req.user.id;
   console.log("productId",productId);
+  console.log("UserId,",userId);
+  
  
   try {
     const cart = await Cart.findOne({ userId }).populate(
@@ -108,9 +113,10 @@ removeItemFromCart = async (req, res) => {
     );    if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
-
-    cart.items = cart.items.filter((item) => !item.productId.equals(productId));
-
+ console.log("cart",cart);
+ 
+    cart.items = cart.items.filter((item) => !item.productId?._id?.equals(productId));
+    
     if (cart.items.length === 0) {
       await Cart.deleteOne({ userId });
       return res.status(200).json({ message: "Cart is empty now." });
@@ -123,7 +129,7 @@ removeItemFromCart = async (req, res) => {
     await cart.save();
     res.status(200).json(cart);
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message:error.message});
   }
 };
 

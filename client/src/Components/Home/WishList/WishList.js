@@ -76,29 +76,7 @@ const WishList = ({ open, setOpen }) => {
   }
 
   const [selectedProduct,setSelectedProduct]=useState()
-  // const updateCart =()=>{
-  //   dispatch(addToCart(selectedProduct))
-  // }
-//   const handleQuantityChange = (product, action) => {
-//     console.log("product",product);
-    
-//     const newQuantity = action === 'increase' ? product.quantity + 1 : product.productId.quantity - 1;
-//     console.log("newQuantity",newQuantity);
-    
-//     if (newQuantity < 1) return; // Prevents decreasing quantity below 1
 
-//     // Update selected product state
-//      setSelectedProduct({
-//       productId: product.productId._id,
-//       quantity: newQuantity,
-//       price: product.productId.price
-//     });
-//  console.log("selectedProduct",selectedProduct);
- 
-
-//     // Update the cart
-//     updateCart();
-//   };
 
 const updateCart = (productId, price, quantity) => {
   const product = { productId, price, quantity };

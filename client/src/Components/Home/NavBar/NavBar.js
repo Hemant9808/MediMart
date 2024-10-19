@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import ActionIcons from './ActionIcons';
 import CompanyLogo from './CompanyLogo';
 import NavLinks from './NavLinks';
+import { useDispatch } from 'react-redux';
+import { fetchCart } from '../../../Redux/cartSlice/cartSlice';
 
 const NavBar = () => {
   const location = useLocation();
@@ -23,6 +25,11 @@ const NavBar = () => {
       };
     });
   }, []);
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchCart())
+   },[])
 
   return (
     <nav
