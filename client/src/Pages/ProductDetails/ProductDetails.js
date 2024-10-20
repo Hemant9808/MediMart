@@ -20,7 +20,7 @@ const ProductDetails = () => {
   // Function to fetch product by ID
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/product/getProductById/${id}`);
+      const response = await axios.get(`https://medimart-nayg.onrender.com/product/getProductById/${id}`);
       setProduct(response.data); // Store the fetched product in state
       setLoading(false); // Turn off loading once data is fetched
     } catch (error) {

@@ -13,6 +13,7 @@ import axios from "axios";
 const Checkout = () => {
   const [cartProduct, setCartProduct] = useState();
   const {cart} = useSelector((state)=>state.CartDetails)
+  const [paymentMethod,setPaymentMethod]= useState();
   const [orderDetails, setOrderDetails] = useState({
     items: cart.items,
     shippingAddress: {
@@ -20,15 +21,17 @@ const Checkout = () => {
       city: "",
       postalCode: "",
       country: "",
+      
     },
-    // paymentMethod: "",
+     paymentMethod: "",
 
+    razorpay_order_id:'',
     shippingPrice: 0,
     totalPrice: cart.totalPrice,
   });
 
   const createOrder= async()=>{
-    const response= await axios.post("http://localhost:4000/order/createorder",
+    const response= await axios.post("https://medimart-nayg.onrender.com/order/createorder",
          orderDetails,
          { headers: {
         authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
@@ -56,6 +59,12 @@ const Checkout = () => {
     if (cart && cart.items) {
       setCartProduct(cart);
     }
+    if (cart.items && cart.items.length > 0) {
+      setOrderDetails((prevDetails) => ({
+        ...prevDetails,
+        items: cart.items, // Update items when cart.items has data
+      }));
+    }
   }, [cart]);
 
   console.log("orderDetails",orderDetails);
@@ -68,7 +77,52 @@ const Checkout = () => {
   }
 
 
+  
+ 
+    const checkoutHandler = async (amount) => {
 
+      const {
+        data: { key },
+      } = await axios.get("https://medimart-nayg.onrender.com/payment/getkey");
+  
+      const {
+        data: { order },
+      } = await axios.post("https://medimart-nayg.onrender.com/payment/checkout", {
+        amount,
+      });
+       orderDetails.razorpay_order_id=order.id;
+       createOrder()
+  
+      const options = {
+        key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Hemant Kumar",
+        description: "RazorPay",
+        image: "https://avatars.githubusercontent.com/u/143936287?s=400&u=b0405682c50a0ca7f98e02b46db96e91520df3b5&v=4",
+        order_id: order.id,
+        callback_url: "https://medimart-nayg.onrender.com/payment/paymentverification",
+        prefill: {
+          name: "Hemant Kumar",
+          email: "hemant.kumar@example.com",
+          contact: "9304389008",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#121212",
+        },
+        method: {
+          upi: true, // This ensures UPI shows up
+          card: true,
+          netbanking: true,
+          wallet: true,       
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
+    };
  
 
 
@@ -184,8 +238,8 @@ const Checkout = () => {
               </div>
 
               <div className="lg:px-2 lg:w-1/2">
-                <PaymentMethod />
-                <OrderDetails createOrder={createOrder} cartProduct={cartProduct}  />
+                <PaymentMethod orderDetails={orderDetails} />
+                <OrderDetails orderDetails={orderDetails} checkoutHandler={checkoutHandler} createOrder={createOrder} cartProduct={cartProduct}  />
               </div>
             </div>
           </div>

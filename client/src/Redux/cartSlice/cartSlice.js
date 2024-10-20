@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Base URL for cart-related API endpoints
-const CART_API_BASE_URL = "http://localhost:4000/cart";
+const CART_API_BASE_URL = "https://medimart-nayg.onrender.com/cart";
 
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   try {

@@ -12,6 +12,10 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
+ 
+razorpay_payment_id:{
+  type:String,
+  },
 
   price: {
     type: Number,
@@ -49,6 +53,11 @@ const orderSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  razorpay_order_id:{
+    type:String,
+    required:true
+    
+    },
   items: [orderItemSchema],
   shippingAddress: {
     address: {
@@ -75,10 +84,10 @@ const orderSchema = new Schema({
     default:'cod'
   },
   paymentResult: {
-    id: String,
+    razorpay_payment_id: String,
     status: String,
-    update_time: String,
-    email_address: String,
+    paidAt: String,
+    paymentMethod: String,
   },
   
   shippingPrice: {

@@ -18,6 +18,7 @@ const PaymentMethod = () => {
             type="radio"
             className="form-radio h-5 w-5 text-gray-600"
             checked
+            
           />
           <span className="ml-2 text-gray-800 font-medium">
             Cash On Delivery

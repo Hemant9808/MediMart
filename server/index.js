@@ -7,7 +7,10 @@ const productRouter = require('./api/routes/ProductRouter');
 const CartRouter = require('./api/routes/CartRouter');
 const CategoryRouter = require('./api/routes/CategoryRouter');
 const OrderRoutes = require('./api/routes/OrderRouter');
+const PaymentRoutes = require('./api/routes/PaymentRouter');
 
+// import Razorpay from "razorpay";
+const Razorpay = require("razorpay")
 
 const cron = require('node-cron');
 
@@ -19,12 +22,19 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
+//  const instance = new Razorpay({
+//   key_id: "rzp_test_Mq75DuYIXcejGr",
+//   key_secret:"2YaFnkiQArYObRYboB6n5mOX",
+// });
+// module.exports= instance;
+
 // routers
 app.use('/auth', authRouter);
 app.use('/product', productRouter);
 app.use('/cart',CartRouter)
 app.use('/category',CategoryRouter)
 app.use('/order',OrderRoutes);
+app.use('/payment',PaymentRoutes);
 
 
 cron.schedule('* * * * *', () => {

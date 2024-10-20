@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const CartProduct = [
@@ -34,18 +34,15 @@ const CartProduct = [
   },
 ];
 
-
-const OrderDetails = ({cartProduct,createOrder}) => {
-
+const OrderDetails = ({OrderDetails,cartProduct, createOrder, checkoutHandler }) => {
   const [Subtotal, setSubtotal] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
 
   //Demo discount and tax rates
-  const discountRate = 0.1;  // 10% discount
-  const taxRate = 0.2;  // 20% tax
-
+  const discountRate = 0.1; // 10% discount
+  const taxRate = 0.2; // 20% tax
 
   useEffect(() => {
     //calculating the subtotal
@@ -66,7 +63,7 @@ const OrderDetails = ({cartProduct,createOrder}) => {
     //calculating the total
     const newTotal = newSubTotal - newDiscount + newTax;
     setTotal(newTotal);
-  }, [CartProduct]);  //recalculate whenever cartProducts changes  
+  }, [CartProduct]); //recalculate whenever cartProducts changes
 
   return (
     <div>
@@ -88,8 +85,7 @@ const OrderDetails = ({cartProduct,createOrder}) => {
             ₹ {cartProduct.totalPrice}
           </div>
         </div>
-        
-        
+
         <div className="flex justify-between pt-2 border-b">
           <div className="lg:px-4 lg:py-2 m-1 text-lg lg:text-xl font-medium text-center text-gray-800">
             Delivery charge
@@ -103,14 +99,11 @@ const OrderDetails = ({cartProduct,createOrder}) => {
             Total
           </div>
           <div className="lg:px-4 lg:py-2 m-1 lg:text-lg font-medium text-center text-gray-800">
-          ₹ {cartProduct.totalPrice}
+            ₹ {cartProduct.totalPrice}
           </div>
         </div>
         <a href="#0">
-          <Link
-            
-            className="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-teal-500 rounded-full shadow item-center hover:bg-teal-700 focus:shadow-outline focus:outline-none"
-          >
+          <Link className="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-teal-500 rounded-full shadow item-center hover:bg-teal-700 focus:shadow-outline focus:outline-none">
             <svg
               aria-hidden="true"
               data-prefix="far"
@@ -124,7 +117,15 @@ const OrderDetails = ({cartProduct,createOrder}) => {
                 d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"
               />
             </svg>
-            <span className="ml-2 pt-1" onClick={()=>createOrder()}>Place Order</span>
+            <span
+              className="ml-2 pt-1"
+              onClick={() => {
+                // createOrder();
+                checkoutHandler(cartProduct.totalPrice);
+              }}
+            >
+              Place Order
+            </span>
           </Link>
         </a>
       </div>

@@ -1,15 +1,16 @@
 const Order = require('../models/OrderModel');
 
 const createOrder = async(req, res) => {
-    console.log("entered");
-    console.log("req.user",req.user);
+    
+    // console.log("req.user",req.user);
     
     
-    const { items, shippingAddress, paymentMethod, taxPrice, shippingPrice, totalPrice } = req.body;
-  
+    const { items, shippingAddress, paymentMethod, taxPrice, shippingPrice, totalPrice,razorpay_order_id } = req.body;
+    console.log("entered",razorpay_order_id);
     if (items && items.length === 0) {
       res.status(400);
       throw new Error('No order items');
+
       return;
     }
   
@@ -21,6 +22,7 @@ const createOrder = async(req, res) => {
       taxPrice,
       shippingPrice,
       totalPrice,
+      razorpay_order_id
     });
   
     const createdOrder = await order.save();
@@ -38,20 +40,26 @@ const getOrderById = async (req, res) => {
   }
 }
 
+
 const updateOrderToPaid = async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  console.log('enterd in updateOrderToPaid');
+  const {razorpay_order_id}= req.body;
+  const order = await Order.findOne({razorpay_order_id:razorpay_order_id});
 
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.email_address,
+      razorpay_payment_id:req.body.razorpay_payment_id || order.paymentResult.razorpay_payment_id,
+      status:true,
+      paidAt:Date.now(),
+      
+      paymentMethod:'credit_card',     
     };
 
     const updatedOrder = await order.save();
+    console.log("updatedOrder",updatedOrder);
+    
     res.json(updatedOrder);
   } else {
     res.status(404);
