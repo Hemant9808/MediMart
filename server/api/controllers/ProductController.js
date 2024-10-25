@@ -264,7 +264,7 @@ const uploadImage = async (req, res) => {
   } catch (error) {
     console.log(error);
     
-    res.send(error)
+    res.send(error.message)
   }
  
 };

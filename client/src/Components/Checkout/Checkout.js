@@ -31,7 +31,7 @@ const Checkout = () => {
   });
 
   const createOrder= async()=>{
-    const response= await axios.post("https://medimart-nayg.onrender.com/order/createorder",
+    const response= await axios.post("http://localhost:4000/order/createorder",
          orderDetails,
          { headers: {
         authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
@@ -83,11 +83,11 @@ const Checkout = () => {
 
       const {
         data: { key },
-      } = await axios.get("https://medimart-nayg.onrender.com/payment/getkey");
+      } = await axios.get("http://localhost:4000/payment/getkey");
   
       const {
         data: { order },
-      } = await axios.post("https://medimart-nayg.onrender.com/payment/checkout", {
+      } = await axios.post("http://localhost:4000/payment/checkout", {
         amount,
       });
        orderDetails.razorpay_order_id=order.id;
@@ -101,7 +101,7 @@ const Checkout = () => {
         description: "RazorPay",
         image: "https://avatars.githubusercontent.com/u/143936287?s=400&u=b0405682c50a0ca7f98e02b46db96e91520df3b5&v=4",
         order_id: order.id,
-        callback_url: "https://medimart-nayg.onrender.com/payment/paymentverification",
+       // callback_url: "http://localhost:4000/payment/paymentverification",
         prefill: {
           name: "Hemant Kumar",
           email: "hemant.kumar@example.com",
@@ -109,6 +109,11 @@ const Checkout = () => {
         },
         notes: {
           address: "Razorpay Corporate Office",
+        },
+        prefill: {
+          name: "John Doe",  // User's name
+          email: "john.doe@example.com",  // User's email
+          contact: "9876543210",  // User's phone number
         },
         theme: {
           color: "#121212",

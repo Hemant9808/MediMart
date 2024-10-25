@@ -12,17 +12,22 @@ const instance = new Razorpay({
 
 
  const checkout = async (req, res) => {
-  const options = {
-    amount: Number(req.body.amount * 100),
-    currency: "INR",
-  };
-  const order = await instance.orders.create(options);
-
-  res.status(200).json({
-
-    success: true,
-    order,
-  });
+    try {
+        const options = {
+            amount: Number(req.body.amount * 100),
+            currency: "INR",
+          };
+          const order = await instance.orders.create(options);
+        
+          res.status(200).json({
+        
+            success: true,
+            order,
+          });
+    } catch (error) {
+        res.status(500).send({message:error.message}) 
+    }
+ 
 };
 
  const paymentVerification = async (req, res) => {
@@ -51,8 +56,8 @@ const instance = new Razorpay({
        // params: { razorpay_order_id: req.params.order_id },
         body: {
            razorpay_payment_id,
-           razorpay_order_id
-          
+           razorpay_order_id,
+           paymentStatus:"paid",
         },
       };
       const mockRes = {

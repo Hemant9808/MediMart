@@ -77,17 +77,27 @@ const orderSchema = new Schema({
      // required: true,
     },
   },
-  paymentMethod: {
+  // paymentMethod: {
+  //   type: String,
+  //   enum: ['credit_card', 'paypal', 'stripe', 'cod'], // Add more methods as needed
+  //   required: true,
+  //   default:'cod'
+  // },
+  paymentResult: {
+    razorpay_payment_id: String,
+    paymentStatus:{
+      type:String,
+      enum:['paid','not-paid'],
+      required:true,
+      default:'not-paid',
+      },
+    paidAt: String,
+    paymentMethod: {
     type: String,
     enum: ['credit_card', 'paypal', 'stripe', 'cod'], // Add more methods as needed
     required: true,
     default:'cod'
   },
-  paymentResult: {
-    razorpay_payment_id: String,
-    status: String,
-    paidAt: String,
-    paymentMethod: String,
   },
   
   shippingPrice: {
@@ -100,14 +110,14 @@ const orderSchema = new Schema({
     required: true,
     default: 0.0,
   },
-  isPaid: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  paidAt: {
-    type: Date,
-  },
+  // isPaid: {
+  //   type: Boolean,
+  //   required: true,
+  //   default: false,
+  // },
+  // paidAt: {
+  //   type: Date,
+  // },
   isDelivered: {
     type: Boolean,
     required: true,

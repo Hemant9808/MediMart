@@ -27,7 +27,7 @@ const User = require('../models/UserModel'); // User model for database interact
     }
 
     req.user = currentUser;
-    // console.log("currentUser",currentUser);
+    console.log("currentUser",currentUser);
     
     next();
   } catch (error) {

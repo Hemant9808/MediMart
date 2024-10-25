@@ -47,16 +47,15 @@ const updateOrderToPaid = async (req, res) => {
   const order = await Order.findOne({razorpay_order_id:razorpay_order_id});
 
   if (order) {
-    order.isPaid = true;
-    order.paidAt = Date.now();
+    order.orderStatus=req.body.orderStatus || order.orderStatus;
+    // order.isPaid = true;
+    // order.paidAt = Date.now();
     order.paymentResult = {
       razorpay_payment_id:req.body.razorpay_payment_id || order.paymentResult.razorpay_payment_id,
-      status:true,
+      status:req.body.paymentStatus || order.paymentResult.paymentStatus,
       paidAt:Date.now(),
-      
-      paymentMethod:'credit_card',     
+      paymentMethod:req.body.paymentMethod || order.paymentResult.paymentMethod,     
     };
-
     const updatedOrder = await order.save();
     console.log("updatedOrder",updatedOrder);
     
@@ -68,18 +67,25 @@ const updateOrderToPaid = async (req, res) => {
 }
 
 
-const updateOrderToDelivered = async (req, res) => {
-  const order = await Order.findById(req.params.id);
-
+const updateOrderStatus= async (req, res) => {
+  const {status,id}=req.body;
+  console.log(status,id);
+  
+  const order = await Order.findById(id);
+  
+  
   if (order) {
-    order.isDelivered = true;
+    order.orderStatus = status;
+    if(status=='delivered'){
     order.deliveredAt = Date.now();
+    order.isDelivered=true;
+  }
 
     const updatedOrder = await order.save();
     res.json(updatedOrder);
   } else {
-    res.status(404);
-    throw new Error('Order not found');
+    res.status(500);
+    // throw new Error('Order not found');
   }
 }
 
@@ -99,7 +105,7 @@ module.exports = {
   createOrder,
   getOrderById,
   updateOrderToPaid,
-  updateOrderToDelivered,
+  updateOrderStatus,
   getMyOrders,
   getAllOrders,
 };
