@@ -101,7 +101,7 @@ const Checkout = () => {
         description: "RazorPay",
         image: "https://avatars.githubusercontent.com/u/143936287?s=400&u=b0405682c50a0ca7f98e02b46db96e91520df3b5&v=4",
         order_id: order.id,
-       // callback_url: "http://localhost:4000/payment/paymentverification",
+        callback_url: "http://localhost:4000/payment/paymentverification",
         prefill: {
           name: "Hemant Kumar",
           email: "hemant.kumar@example.com",

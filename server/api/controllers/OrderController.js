@@ -3,30 +3,35 @@ const Order = require('../models/OrderModel');
 const createOrder = async(req, res) => {
     
     // console.log("req.user",req.user);
+    try {
+      const { items, shippingAddress, paymentMethod, taxPrice, shippingPrice, totalPrice,razorpay_order_id } = req.body;
+      console.log("entered",razorpay_order_id);
+      if (items && items.length === 0) {
+        res.status(400);
+        throw new Error('No order items');
+  
+        return;
+      }
     
+      const order = new Order({
+        user: req.user._id,
+        items,
+        shippingAddress,
+        paymentMethod,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        razorpay_order_id
+      });
     
-    const { items, shippingAddress, paymentMethod, taxPrice, shippingPrice, totalPrice,razorpay_order_id } = req.body;
-    console.log("entered",razorpay_order_id);
-    if (items && items.length === 0) {
-      res.status(400);
-      throw new Error('No order items');
-
-      return;
+      const createdOrder = await order.save();
+      res.status(201).json(createdOrder);
+      
+    } catch (error) {
+      res.status(500).send({message:error.message})
     }
-  
-    const order = new Order({
-      user: req.user._id,
-      items,
-      shippingAddress,
-      paymentMethod,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-      razorpay_order_id
-    });
-  
-    const createdOrder = await order.save();
-    res.status(201).json(createdOrder);
+    
+   
   }
 
 const getOrderById = async (req, res) => {

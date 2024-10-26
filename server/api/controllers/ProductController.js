@@ -250,14 +250,13 @@ const uploadImage = async (req, res) => {
     console.log("coverImageLocalPath", coverImageLocalPath);
   
     if (!coverImageLocalPath) {
-      throw new ApiError(400, "Cover image file is missing");
-    }
+      res.send({message:"coverImageLocalPath not found"})    }
   
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
     console.log("coverImage", coverImage);
   
     if (!coverImage.url) {
-      throw new ApiError(400, "Error while uploading on image");
+      res.send({message:"cover.url not found"})
     }
     return res.status(200).json(coverImage.url);
     

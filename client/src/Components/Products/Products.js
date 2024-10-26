@@ -66,7 +66,7 @@ const Products = () => {
  to={`/productDetails/${product._id}`}                >
                   <div className="w-full min-h-80 bg-blue-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                     <img
-                      src={product?.images[0].url}
+                      src={product?.images[0]?.url}
                       alt={product?.imageAlt}
                       className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                     />
