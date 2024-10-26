@@ -253,6 +253,9 @@ const uploadImage = async (req, res) => {
       res.send({message:"coverImageLocalPath not found"})    }
   
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+   
+    if(coverImage==null){res.send({message:"coverImage is null "})}
+    res.send({coverImage: coverImage});
     console.log("coverImage", coverImage);
   
     if (!coverImage.url) {
