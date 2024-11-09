@@ -37,24 +37,26 @@ app.use('/order',OrderRoutes);
 app.use('/payment',PaymentRoutes);
 
 
-cron.schedule('* * * * *', () => {
-  console.log('Running task every minute');
-  axios.get('https://medimart-nayg.onrender.com/keep-alive')
-        .then(response => {
-            console.log('Response:', response.status);
-        })
-        .catch(error => {
-            console.error('Error sending keep-alive:', error);
-        });
-});
-app.get('/keep-alive', (req, res) => {
-  res.status(200).send('Server is awake!');
-});
+// cron.schedule('* * * * *', () => {
+//   console.log('Running task every minute');
+//   axios.get('https://medimart-nayg.onrender.com/keep-alive')
+//         .then(response => {
+//             console.log('Response:', response.status);
+//         })
+//         .catch(error => {
+//             console.error('Error sending keep-alive:', error);
+//         });
+// });
+// app.get('/keep-alive', (req, res) => {
+//   res.status(200).send('Server is awake!');
+// });
 
 app.get('/', (req, res) => res.send('welcome our app'));
 
 //const CONNECTION_URL = process.env.MONGO_URI;
 const CONNECTION_URL="mongodb+srv://hemant9808:ySEEecsHJArJfzfA@mydb.ovbqzxf.mongodb.net/chatApp";
+//const CONNECTION_URL = "mongodb://127.0.0.1:27017/chatApp";
+
 
 const PORT = process.env.PORT || 4000;
 

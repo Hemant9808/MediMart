@@ -13,19 +13,26 @@ const instance = new Razorpay({
 
  const checkout = async (req, res) => {
     try {
+      console.log(req.body);
+      
         const options = {
             amount: Number(req.body.amount * 100),
             currency: "INR",
           };
+          console.log("before order create",options);
+          
           const order = await instance.orders.create(options);
-        
+          console.log("after order create");
+
           res.status(200).json({
         
             success: true,
             order,
           });
+          
     } catch (error) {
-        res.status(500).send({message:error.message}) 
+      console.log("something wen wrong");     
+        res.status(501).send({message:error.message}) 
     }
  
 };
@@ -65,6 +72,7 @@ const instance = new Razorpay({
         status: (code) => ({
           json: (message) => message, // Mock the res.status().json call
         }),
+        
       };
     
     console.log("mockReq",mockReq);
@@ -73,7 +81,9 @@ const instance = new Razorpay({
     console.log("updateOrderToPaid called");
     
     res.redirect(
-      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+      // `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+            `http://localhost:3000/`
+
     );
   } else {
     res.status(400).json({

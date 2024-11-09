@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,6 +11,8 @@ import {
 import { useDropzone } from "react-dropzone";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const [open, setOpen] = React.useState(false);
   const [uploadedImage, setUploadedImage] = useState([]);
@@ -26,8 +28,8 @@ const Hero = () => {
       const formData = new FormData();
       formData.append("file", file);
       const response = await axios.post(
-       //"http://localhost:4000/product/upload-image",
-        "https://medimart-nayg.onrender.com/product/upload-image",
+       "http://localhost:4000/product/upload-image",
+        //"https://medimart-nayg.onrender.com/product/upload-image",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -42,6 +44,7 @@ const Hero = () => {
     }
    
   };
+  
   
   const addPrescription = async(path) => {
     const data ={url:path}
@@ -58,7 +61,14 @@ const Hero = () => {
     console.log("addPrescription",response);
     
   };
-
+  const navigate = useNavigate();
+  const { userDetails } = useSelector((state) => state.auth);
+  console.log("userDetails",userDetails);
+  // useEffect(()=>{
+  // if(!userDetails || !userDetails.token){
+  //   navigate('/login')
+  // }
+  // },[])
   return (
     <section>
       <div className="w-full px-3 antialiased lg:px-6">

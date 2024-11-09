@@ -25,7 +25,7 @@ const createOrder = async(req, res) => {
       });
     
       const createdOrder = await order.save();
-      res.status(201).json(createdOrder);
+      res.status(201).json({success:true,createdOrder});
       
     } catch (error) {
       res.status(500).send({message:error.message})
@@ -49,7 +49,11 @@ const getOrderById = async (req, res) => {
 const updateOrderToPaid = async (req, res) => {
   console.log('enterd in updateOrderToPaid');
   const {razorpay_order_id}= req.body;
+  console.log("updateOrderToPaid", req.body);
+  
   const order = await Order.findOne({razorpay_order_id:razorpay_order_id});
+  console.log("order found",order);
+  
 
   if (order) {
     order.orderStatus=req.body.orderStatus || order.orderStatus;
@@ -57,12 +61,13 @@ const updateOrderToPaid = async (req, res) => {
     // order.paidAt = Date.now();
     order.paymentResult = {
       razorpay_payment_id:req.body.razorpay_payment_id || order.paymentResult.razorpay_payment_id,
-      status:req.body.paymentStatus || order.paymentResult.paymentStatus,
+      paymentStatus:req.body.paymentStatus || order.paymentResult.paymentStatus,
       paidAt:Date.now(),
       paymentMethod:req.body.paymentMethod || order.paymentResult.paymentMethod,     
     };
     const updatedOrder = await order.save();
     console.log("updatedOrder",updatedOrder);
+
     
     res.json(updatedOrder);
   } else {
@@ -87,7 +92,7 @@ const updateOrderStatus= async (req, res) => {
   }
 
     const updatedOrder = await order.save();
-    res.json(updatedOrder);
+    res.status(200).json(updatedOrder);
   } else {
     res.status(500);
     // throw new Error('Order not found');
@@ -102,7 +107,7 @@ const getMyOrders = async (req, res) => {
 
 
 const getAllOrders = async (req, res) => {
-  const orders = await Order.find({}).populate('user', 'id name');
+  const orders = await Order.find({}).populate('user', 'id name').sort({createdAt:-1});
   res.json(orders);
 }
 

@@ -41,14 +41,13 @@ signup = async (req, res, next) => {
       email,
       phone,
       password: hashPassword,
-     
     });
 
     const saveUser = await newUser.save();
     
-
+    saveUser.password = undefined;
     const token = signToken(saveUser.id);
-    return res.send({
+    return res.status(200).send({
       token,
       saveUser
     });
@@ -68,17 +67,20 @@ login = async (req, res,next) => {
     }
 
     const user = await User.findOne({ email }).select("username email password fastName lastName phone");
-
     if (!user) {
-      return next(new AppError("No account with this email has been registered", 404));
+      res.status(400).send({message:"password is in correct"})
+      // return next(new AppError("No account with this email has been registered", 404));
     }
+
     
 
     const matchPassword = await bcrypt.compare(password, user.password);
 
     if (!matchPassword) {
-      return next(new AppError("Incorrect password", 401));
+      res.status(400).send({message:"password is in correct"})
+      // return next(new AppError("Incorrect password", 401));
     }
+    
 
     const token = signToken(user.id);
 
@@ -89,6 +91,7 @@ login = async (req, res,next) => {
       token,
       user,
     });
+
   } catch (error) {
     console.log(error);
     res.send({ message: error });
@@ -110,6 +113,7 @@ forgotPassword = async (req, res, next) => {
    console.log("resetToken",resetToken);
    
     await user.save({ validateBeforeSave: false });
+
 
     const resetURL = `${req.protocol}://${req.get('host')}/resetPassword/${resetToken}`;
      console.log("resetURL",resetURL);

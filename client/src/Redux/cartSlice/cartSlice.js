@@ -1,17 +1,24 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 // Base URL for cart-related API endpoints
-const CART_API_BASE_URL = "https://medimart-nayg.onrender.com/cart";
+ const CART_API_BASE_URL = "https://medimart-nayg.onrender.com/cart";
+//const CART_API_BASE_URL = "http://localhost:4000/cart";
 
+const token = 'fglmds'
+console.log("token",token);
+
+// const token = storedToken!=undefined ? JSON.parse(storedToken) : '';
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   try {
+//     const {userDetails} = useSelector((state)=>state.auth)
+// const token = userDetails.token;
     const response = await axios.get(`${CART_API_BASE_URL}/getUserCart`, {
       headers: {
-        authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
-        "Content-Type": "application/json",
+        authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
+         
       },
     });
     console.log("response.data.", response.data.items);

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { formToJSON } from "axios";
 
 //const LOGIN_API = 'https://medimart-nayg.onrender.com/auth/login'
 const LOGIN_API = 'http://localhost:4000/auth/login'
@@ -22,6 +22,11 @@ export const loginAccount = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
+      // if(response.status==200){
+      // localStorage.setItem('saveUser', JSON.stringify(response.data.savedUser));
+      // localStorage.setItem('token', JSON.stringify(response.data.token));}
+
+
       console.log("response- login !=", response);
 
       return response;
@@ -58,12 +63,16 @@ export const createAccount = createAsyncThunk(
         }
       )
       //const response = await axios.post(REGISTER_API, formData);
-      console.log('done');
-      
+      console.log('done',response.data);
+      if(response.status==200){
+      localStorage.setItem('saveUser', JSON.stringify(response.data?.savedUser || ''));
+      localStorage.setItem('token', JSON.stringify(response.data?.token || '' ));
+      }
       // console.log('response- login !=',response);
 
       return response;
     } catch (error) {
+    
       console.log("createAccount error:- ", error);
       return error.message;
     }
@@ -73,7 +82,7 @@ export const createAccount = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    userDetails: localStorage.getItem("saveUser") || "",
+    //userDetails: JSON.parse(localStorage.getItem("saveUser")) || "",
     loading: false,
     error: null,
   },

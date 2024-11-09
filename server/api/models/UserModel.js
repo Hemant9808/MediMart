@@ -34,11 +34,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minlength: 6,
-      select: false, // This ensures the password is not returned in queries by default
+      select: false, 
     },
     role: {
       type: String,
-      enum: ['user', 'admin'], //  Role options
+      enum: ['user', 'admin'],
       default: 'user', 
     },
     passwordChangedAt: Date,
@@ -49,16 +49,15 @@ const userSchema = new Schema(
 );
 
 
-// Update passwordChangedAt field when the password is changed
+
 userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next();
 
-  this.passwordChangedAt = Date.now() - 1000; // Setting this a bit in the past to avoid issues with token creation
+  this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 
 
-// Method to check if the password was changed after the JWT was issued
 userSchema.methods.isPasswordChanged = function (JWTCreatedTime) {
   if (this.passwordChangedAt) {
     const passwordChangedAt = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
@@ -68,7 +67,6 @@ userSchema.methods.isPasswordChanged = function (JWTCreatedTime) {
   return false;
 };
 
-// Method to create a password reset token
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
@@ -77,7 +75,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes from now
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; 
 
   return resetToken;
 };

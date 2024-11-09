@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const GET_ALL_PRODUCTS =
   //"https://medimart-nayg.onrender.com/product/getAllProducts/";
@@ -13,6 +14,7 @@ const GET_PRODUCT_BY_CATEGORY =
   "http://localhost:4000/product/getProductByCategories?";
 
   // const LOGOUT_API = 'logout'
+  // const token = JSON.parse(localStorage.getItem(token));
 
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
@@ -98,9 +100,7 @@ export const addNewProduct = createAsyncThunk(
       
       const response = await axios.post(POST_ALL_PRODUCTS, dataForm, {
         headers: {
-          authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
-          "Content-Type": "application/json",
+          authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE1NzFmZWM4M2VlM2E4OGJjNzI4YSIsImlhdCI6MTcyNjQxMzc1OX0.QH1quEr3Hakn0Ku4h7GSLbAlyrr1tj3QkEeeH9OooC0",
         },
       });
       console.log("response- addNewProduct !=", response);

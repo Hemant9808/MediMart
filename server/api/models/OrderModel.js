@@ -38,6 +38,7 @@ const orderItemSchema = new Schema({
     type: Number,
     required: true,
     min: 1,
+    
   },
   price: {
     type: Number,
@@ -99,6 +100,7 @@ const orderSchema = new Schema({
     default:'cod'
   },
   },
+  
   
   shippingPrice: {
     type: Number,

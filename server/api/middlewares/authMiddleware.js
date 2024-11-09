@@ -19,7 +19,9 @@ const User = require('../models/UserModel'); // User model for database interact
       return next(new AppError('You are not logged in! Please log in to get access.', 401));
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET_KEY); // Throws an error if invalid
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    console.log("decoded",decoded);
+
 
     const currentUser = await User.findById(decoded.id);
     if (!currentUser) {

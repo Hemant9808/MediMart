@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { createAccount } from "../../../Redux/user/actions";
 import { createAccount} from '../../../Redux/authSlice/authSlice'
 import FormValidation from "../../../Validation/FormValidation";
@@ -37,36 +37,17 @@ const Registration = ({ setIsAccount }) => {
 
   const signUp = (e) => {
     e.preventDefault();
-    // recheckUserInput();
+    
     dispatch(createAccount(formData));
     navigate('/');
-    const { firstName, lastName, userName, phone, email, password, cmPassword } =
-      formData;
-    // if (
-    //   !firstName ||
-    //   !lastName ||
-    //   !userName ||
-    //   !phone ||
-    //   !email ||
-    //   !password ||
-    //   !cmPassword
-    // ) {
-    //   return openNotification("error", "All input value not given");
-    // }
-
-    // if (
-    //   !errorData.firstName &&
-    //   !errorData.lastName &&
-    //   !errorData.userName &&
-    //   !errorData.phone &&
-    //   !errorData.email &&
-    //   !errorData.password &&
-    //   !errorData.cmPassword
-    // ) {
-    //   console.log(formData);
-    //   openNotification("success", "User Sign Up Successful");
-    // }
+    
   };
+    const {userDetails} = useSelector((state)=>state.auth)
+  useEffect(()=>{
+    if(userDetails && userDetails.token){
+      navigate('/')
+    }
+    },[])
   return (
     <div>
       <div className="grid w-full grid-cols-3">
