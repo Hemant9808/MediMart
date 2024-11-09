@@ -39,15 +39,17 @@ const LoginForm = () => {
   const login = (e) => {
     e.preventDefault();
     // recheckUserInput();
-    dispatch(loginAccount(formData))
-    .then((res) => {
-      console.log("res login:", res);
-      navigate('/');
+    const response=dispatch(loginAccount(formData));
+    console.log("after login",response)
 
-    })
-    .catch((error) => {
-        console.error("Failed to login:", error);
-    });
+//     .then((res) => {
+//       console.log("res login:", res);
+//       navigate('/');
+
+//     })
+//     .catch((error) => {
+//         console.error("Failed to login:", error);
+//     });
 
 
 

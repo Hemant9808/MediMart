@@ -22,9 +22,9 @@ export const loginAccount = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
-      // if(response.status==200){
-      // localStorage.setItem('saveUser', JSON.stringify(response.data.savedUser));
-      // localStorage.setItem('token', JSON.stringify(response.data.token));}
+       if(response.status==200){
+      localStorage.setItem('savedUser', JSON.stringify(response.data));
+      localStorage.setItem('JWTtoken', JSON.stringify(response.data.token));}
 
 
       console.log("response- login !=", response);
@@ -65,10 +65,10 @@ export const createAccount = createAsyncThunk(
       //const response = await axios.post(REGISTER_API, formData);
       console.log('done',response.data);
       if(response.status==200){
-      localStorage.setItem('saveUser', JSON.stringify(response.data?.savedUser || ''));
-      localStorage.setItem('token', JSON.stringify(response.data?.token || '' ));
+      localStorage.setItem('savedUser', JSON.stringify(response.data?.saveUser || ''));
+      localStorage.setItem('JWTtoken', JSON.stringify(response.data?.token || '' ));
       }
-      // console.log('response- login !=',response);
+       console.log('token set');
 
       return response;
     } catch (error) {
@@ -82,7 +82,7 @@ export const createAccount = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    //userDetails: JSON.parse(localStorage.getItem("saveUser")) || "",
+    userDetails: JSON.parse(localStorage.getItem("savedUser")) || "",
     loading: false,
     error: null,
   },

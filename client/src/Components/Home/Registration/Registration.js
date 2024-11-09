@@ -38,8 +38,9 @@ const Registration = ({ setIsAccount }) => {
   const signUp = (e) => {
     e.preventDefault();
     
-    dispatch(createAccount(formData));
-    navigate('/');
+   const response= dispatch(createAccount(formData));
+   console.log("after login",response)
+    //navigate('/');
     
   };
     const {userDetails} = useSelector((state)=>state.auth)

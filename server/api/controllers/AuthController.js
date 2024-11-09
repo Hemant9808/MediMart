@@ -17,6 +17,7 @@ const signToken = (id) => {
    // expiresIn: 2000,
   });
   return token;
+
 };
 
 signup = async (req, res, next) => {
@@ -28,11 +29,12 @@ signup = async (req, res, next) => {
     console.log("firstName",firstName);
     
     if(!firstName || !lastName|| !userName ||  !email || !phone || !password){
-      res.status(402).json({message:"enter all the fields"});
+      return res.status(402).json({message:"enter all the fields"});
     }
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
+
 
     const newUser = new User({
       firstName,
@@ -49,7 +51,7 @@ signup = async (req, res, next) => {
     const token = signToken(saveUser.id);
     return res.status(200).send({
       token,
-      saveUser
+      user:saveUser
     });
   } catch (error) {
     console.log(error);
@@ -63,31 +65,30 @@ login = async (req, res,next) => {
     console.log( email, password);
 
     if (!email || !password) {
-      res.status(402).send({ message: "all fields are required"});
+      return res.status(402).send({ message: "all fields are required"});
     }
 
     const user = await User.findOne({ email }).select("username email password fastName lastName phone");
     if (!user) {
-      res.status(400).send({message:"password is in correct"})
+      return res.send({message:"password is in correct"})
       // return next(new AppError("No account with this email has been registered", 404));
     }
-
-    
-
-    const matchPassword = await bcrypt.compare(password, user.password);
+    console.log("ddd")
+  console.log(password,user, user.password)
+    const matchPassword = await bcrypt.compare(password, user.password || '');
 
     if (!matchPassword) {
-      res.status(400).send({message:"password is in correct"})
+      return res.status(400).send({message:"password is in correct"})
       // return next(new AppError("Incorrect password", 401));
-    }
-    
-
+    } 
+    console.log('still running')
     const token = signToken(user.id);
 
     console.log(token);
     user.password = undefined;
+    
 
-    return res.send({
+    return res.status(200).send({
       token,
       user,
     });
