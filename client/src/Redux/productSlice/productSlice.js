@@ -3,15 +3,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const GET_ALL_PRODUCTS =
-  //"https://medimart-nayg.onrender.com/product/getAllProducts/";
-  "http://localhost:4000/product/getAllProducts/";
+  "https://medimart-nayg.onrender.com/product/getAllProducts/";
+  // "http://localhost:4000/product/getAllProducts/";
 const POST_ALL_PRODUCTS =
   "https://medimart-nayg.onrender.com/product/addProducts";
 //"http://localhost:4000/product/addProducts"
 // const POST_PRODUCT_BY_ID = 'https://medimart-nayg.onrender.com/product/getProductById/'
 const GET_PRODUCT_BY_CATEGORY =
-  //"https://medimart-nayg.onrender.com/product/getProductByCategories?";
-  "http://localhost:4000/product/getProductByCategories?";
+  "https://medimart-nayg.onrender.com/product/getProductByCategories?";
+  // "http://localhost:4000/product/getProductByCategories?";
 
   // const LOGOUT_API = 'logout'
   // const token = JSON.parse(localStorage.getItem(token));

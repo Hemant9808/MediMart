@@ -28,7 +28,7 @@ const Checkout = () => {
 
   const createOrder = async () => {
     const response = await axios.post(
-      "http://localhost:4000/order/createorder",
+      "https://medimart-nayg.onrender.com/order/createorder",
       orderDetails,
       {
         headers: {
@@ -78,13 +78,13 @@ const Checkout = () => {
   const checkoutHandler = async (amount) => {
     const {
       data: { key },
-    } = await axios.get("http://localhost:4000/payment/getkey");
+    } = await axios.get("https://medimart-nayg.onrender.com/payment/getkey");
 
     
   let number = 300.78
     const {
       data: { order },
-    } = await axios.post("http://localhost:4000/payment/checkout", 
+    } = await axios.post("https://medimart-nayg.onrender.com/payment/checkout", 
      
       { amount: Math.round(amount) },)
 
@@ -103,7 +103,7 @@ const Checkout = () => {
       image:
         "https://avatars.githubusercontent.com/u/143936287?s=400&u=b0405682c50a0ca7f98e02b46db96e91520df3b5&v=4",
       order_id: order.id,
-      callback_url: "http://localhost:4000/payment/paymentverification",
+      callback_url: "https://medimart-nayg.onrender.com/payment/paymentverification",
       prefill: {
         name: "Hemant Kumar",
         email: "hemant.kumar@example.com",
