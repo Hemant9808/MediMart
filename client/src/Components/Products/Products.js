@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../Redux/cartSlice/cartSlice";
 import { fetchCart } from "../../Redux/cartSlice/cartSlice";
+import axios from "axios";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,16 @@ const Products = () => {
  useEffect(()=>{
   dispatch(fetchCart())
  },[])
+//  const [categories,setCategories]=useState([]);
+//  const getCategory=async()=>{
+//    const response= await axios("https://medimart-nayg.onrender.co/category/getAllCategories")
+//    console.log("getcategory",response);
+//    setCategories(response.data)
+   
+//  }
+//  useEffect(()=>{
+//    getCategory();
+//  },[])
 
   return (
     <div className="bg-white">
@@ -59,7 +70,7 @@ const Products = () => {
 
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {categoryWiseProducts &&
+          {categoryWiseProducts && categoryWiseProducts?.length >0 &&
             categoryWiseProducts?.map((product) => (
               <div key={product._id} className="group shadow-4xl">
                 <Link

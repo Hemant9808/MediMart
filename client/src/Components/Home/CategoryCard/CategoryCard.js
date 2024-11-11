@@ -69,7 +69,7 @@ const CategoryItems = [
 const CategoryCard = () => {
   const [categories,setCategories]=useState([]);
 const getCategory=async()=>{
-  const response= await axios("http://localhost:4000/category/getAllCategories")
+  const response= await axios("https://medimart-nayg.onrender.co/category/getAllCategories")
   console.log("getcategory",response);
   setCategories(response.data)
   

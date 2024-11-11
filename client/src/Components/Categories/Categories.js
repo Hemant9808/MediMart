@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import CategoryData from '../../Data/category';
+// import CategoryData from '../../Data/category';
 import { useDispatch } from "react-redux";
 import { categoryProducts } from '../../Redux/productSlice/productSlice';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const useQuery = () => {
   const a = new URLSearchParams(useLocation().search);
@@ -14,7 +15,7 @@ const useQuery = () => {
 const Categories = () => { 
 
   const dispatch = useDispatch();
-  const [categories, setCategories] = useState(CategoryData);
+  const [categories, setCategories] = useState([]);
   const [selectCategory , setSelectCategory] = useState();
 
   const query = useQuery();
@@ -59,9 +60,18 @@ const Categories = () => {
       
      
   }
+  
 
-
-
+  // const [categories,setCategories]=useState([]);
+  const getCategory=async()=>{
+    const response= await axios("https://medimart-nayg.onrender.com/category/getAllCategories")
+    console.log("getcategory",response);
+    setCategories(response.data)
+    
+  }
+  useEffect(()=>{
+    getCategory();
+  },[])
 
 
   // console.log(categories[0].category)
@@ -72,13 +82,13 @@ const Categories = () => {
       </h1>
       <div className=" ">
         {categories.map((singleCategory,index) => (
-          <div key={index} className="m-2" onClick={ () =>  switchCategory(singleCategory.categoryName)}>
+          <div key={index} className="m-2" onClick={ () =>  switchCategory(singleCategory.name)}>
             <ul>
               <li className={`bg-teal-50 hover:bg-teal-100 shadow-4xl my-4 p-2 cursor-pointer `} 
                style={{ backgroundColor: selectCategory === singleCategory?.categoryName ? 'lightgreen' : '' }}>
                 <div className="flex justify-between items-center">
                   <p className="text-gray-800 whitespace-no-wrap tracking-wide">
-                    {singleCategory?.categoryName}
+                    {singleCategory?.name}
                     
                   </p>
                   <svg
