@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import categoryCard from "../../../Data/category";
+import axios from "axios";
 
 const CategoryItems = [
   {
@@ -66,6 +67,16 @@ const CategoryItems = [
 ];
 
 const CategoryCard = () => {
+  const [categories,setCategories]=useState([]);
+const getCategory=async()=>{
+  const response= await axios("http://localhost:4000/category/getAllCategories")
+  console.log("getcategory",response);
+  setCategories(response.data)
+  
+}
+useEffect(()=>{
+  getCategory();
+},[])
   return (
     <>
       {/* <Link to={`/categoryDetails/${categoryCard._id}`}> */}
@@ -75,15 +86,15 @@ const CategoryCard = () => {
             Shop by Category
           </h1>
           <div className="gap-4 md:gap-12 flex flex-row flex-wrap justify-between">
-            {categoryCard.map((item) => (
-             <Link to={`/categoryDetails?category=${item.categoryName}`}> <div className="flex flex-col items-center cursor-pointer">
+            {categories.map((item) => (
+             <Link to={`/categoryDetails?category=${item.name}`}> <div className="flex flex-col items-center cursor-pointer">
                 {/* Category Image */}
                 <div className="bg-[#E9FAEE] hover:shadow-lg transition duration-300 ease-in-out">
-                  <img src={item.img} alt="icon-1" className="w-40 h-40 " />
+                  <img src="https://images.apollo247.in/pub/media/catalog/category/apollo_products_1.jpg?tr=w-367.5,q-100,f-webp,c-at_max" alt="icon-1" className="w-40 h-40 " />
                 </div>
                 {/* Category Name */}
                 <div className="my-5">
-                  <h2 className="w-full items-center">{item.categoryName}</h2>
+                  <h2 className="w-full items-center">{item.name}</h2>
                 </div>
               </div>
               </Link>

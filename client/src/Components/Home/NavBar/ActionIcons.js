@@ -104,7 +104,7 @@ const ActionIcons = () => {
           </svg>
           <span className="absolute inset-0 object-right-top -mr-6">
             <div className="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-teal-400 text-white">
-             {cart.items.length}
+             {cart?.items?.length || 0}
             </div>
           </span>
         </button>

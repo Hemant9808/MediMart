@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 // Base URL for cart-related API endpoints
  const CART_API_BASE_URL = "https://medimart-nayg.onrender.com/cart";
-//const CART_API_BASE_URL = "http://localhost:4000/cart";
+// const CART_API_BASE_URL = "http://localhost:4000/cart";
 
 const token = 'fglmds'
 console.log("token",token);

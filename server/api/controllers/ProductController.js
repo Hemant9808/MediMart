@@ -78,7 +78,7 @@ const getProductByCategories = async (req, res) => {
     const products = await Product.find({ categories: { $in: categoryId } });
 
     if (products.length === 0) {
-      return res.status(404).json(products);
+      return res.status(200).json(products);
     }
     res.status(200).json(products);
   } catch (error) {

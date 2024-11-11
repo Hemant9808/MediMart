@@ -58,7 +58,7 @@ const Checkout = () => {
     if (cart && cart.items) {
       setCartProduct(cart);
     }
-    if (cart.items && cart.items.length > 0) {
+    if (cart.items ) {
       setOrderDetails((prevDetails) => ({
         ...prevDetails,
         items: cart.items, // Update items when cart.items has data

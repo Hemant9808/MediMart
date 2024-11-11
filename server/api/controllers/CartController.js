@@ -91,7 +91,7 @@ getUserCart = async (req, res) => {
       "price name images brand"
     );
     if (!cart) {
-      return res.status(404).json({ error: "Cart not found." });
+      return res.status(200).json([]);
     }
     res.status(200).json(cart);
   } catch (error) {
