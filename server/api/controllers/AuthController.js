@@ -78,6 +78,13 @@ login = async (req, res,next) => {
     const matchPassword = await bcrypt.compare(password, user.password || '');
 
     if (!matchPassword) {
+      const emailOptions = {
+        email: user.email,
+        subject: 'Your password reset token (valid for 10 minutes)',
+        message: `froud access`,
+      };
+  
+      await sendEmail(emailOptions);
       return res.status(400).send({message:"password is in correct"})
       // return next(new AppError("Incorrect password", 401));
     } 

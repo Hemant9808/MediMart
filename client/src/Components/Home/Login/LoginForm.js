@@ -42,14 +42,14 @@ const LoginForm = () => {
     const response=dispatch(loginAccount(formData));
     console.log("after login",response)
 
-//     .then((res) => {
-//       console.log("res login:", res);
-//       navigate('/');
+    .then((res) => {
+      console.log("res login:", res);
+      navigate('/');
 
-//     })
-//     .catch((error) => {
-//         console.error("Failed to login:", error);
-//     });
+    })
+    .catch((error) => {
+        console.error("Failed to login:", error);
+    });
 
 
 

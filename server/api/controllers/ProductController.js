@@ -252,17 +252,16 @@ const uploadImage = async (req, res) => {
     if (!coverImageLocalPath) {
       res.send({message:"coverImageLocalPath not found"})    }
   
-    // const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
    
-    // if(coverImage==null){res.send({message:"coverImage is null "})}
-    // res.send({coverImage: coverImage});
-    // console.log("coverImage", coverImage);
-  
-    // if (!coverImage.url) {
-    //   res.send({message:"cover.url not found"})
-    // }
+    if(coverImage==null){return res.send({message:"coverImage is null "})}
+    if (!coverImage.url) {
+      return res.send({message:"cover.url not found"})
+    }
+    console.log("coverImage", coverImage);
+    return res.send({coverImage: coverImage});
 
-    // return res.status(200).json(coverImage.url);
+    return res.status(200).json(coverImage.url);
   } catch (error) {
     console.log(error); 
     res.send(error.message)

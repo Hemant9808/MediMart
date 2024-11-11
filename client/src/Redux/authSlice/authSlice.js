@@ -4,8 +4,8 @@ import axios, { formToJSON } from "axios";
 const LOGIN_API = 'https://medimart-nayg.onrender.com/auth/login'
 // const LOGIN_API = 'http://localhost:4000/auth/login'
 
-const REGISTER_API = 'https://medimart-nayg.onrender.com/auth/signup'
-// const REGISTER_API = 'http://localhost:4000/auth/signup'
+// const REGISTER_API = 'https://medimart-nayg.onrender.com/auth/signup'
+const REGISTER_API = 'http://localhost:4000/auth/signup'
 
 export const loginAccount = createAsyncThunk(
   "auth/loginAccount",

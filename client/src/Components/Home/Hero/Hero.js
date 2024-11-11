@@ -28,8 +28,8 @@ const Hero = () => {
       const formData = new FormData();
       formData.append("file", file);
       const response = await axios.post(
-       "http://localhost:4000/product/upload-image",
-        //"https://medimart-nayg.onrender.com/product/upload-image",
+      //  "http://localhost:4000/product/upload-image",
+        "https://medimart-nayg.onrender.com/product/upload-image",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
