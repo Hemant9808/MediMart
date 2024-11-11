@@ -199,7 +199,7 @@ const addProducts = async (req, res) => {
       console.log("product update sucessfully");
 
     } else {
-      console.log("product created sucessfully");
+      // console.log("product created sucessfully");
 
       product = new Product({
         name,
@@ -259,7 +259,7 @@ const uploadImage = async (req, res) => {
       return res.send({message:"cover.url not found"})
     }
     console.log("coverImage", coverImage);
-    return res.send({coverImage: coverImage});
+    return res.send({coverImage: coverImage.url});
 
     return res.status(200).json(coverImage.url);
   } catch (error) {
