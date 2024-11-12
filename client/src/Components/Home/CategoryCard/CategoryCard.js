@@ -85,7 +85,9 @@ useEffect(()=>{
           <h1 className="text-3xl sm:text-4xl font-semibold font-display text-gray-800 pb-10 text-center sm:text-left">
             Shop by Category
           </h1>
-          <div className="gap-4 md:gap-12 flex flex-row flex-wrap justify-between">
+          <div className="gap-4 md:gap-12 flex flex-row flex-wrap ">
+          
+           
             {categories.map((item) => (
              <Link to={`/categoryDetails?category=${item.name}`}> <div className="flex flex-col items-center cursor-pointer">
                 {/* Category Image */}
@@ -99,6 +101,8 @@ useEffect(()=>{
               </div>
               </Link>
             ))}
+            
+
           </div>
         </div>
       
